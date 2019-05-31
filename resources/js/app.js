@@ -22,7 +22,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.use(VueFormWizard);
-Vue.component('newregistration', require('./components/newRegistration').default);
+Vue.component('newregistration', require('./components/Admissions/New').default);
 Vue.component('admissionslist', require('./components/Admissions/List').default);
 Vue.component('admissionsshow', require('./components/Admissions/Show').default);
 

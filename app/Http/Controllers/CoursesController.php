@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Admission;
+use App\Course;
 use Illuminate\Http\Request;
 
-class AdmissionController extends Controller
+class CoursesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class AdmissionController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -41,10 +42,10 @@ class AdmissionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Admission  $admission
+     * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function show(Admission $admission)
+    public function show(Course $course)
     {
         //
     }
@@ -52,10 +53,10 @@ class AdmissionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Admission  $admission
+     * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function edit(Admission $admission)
+    public function edit(Course $course)
     {
         //
     }
@@ -64,10 +65,10 @@ class AdmissionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Admission  $admission
+     * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Admission $admission)
+    public function update(Request $request, Course $course)
     {
         //
     }
@@ -75,10 +76,10 @@ class AdmissionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Admission  $admission
+     * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Admission $admission)
+    public function destroy(Course $course)
     {
         //
     }

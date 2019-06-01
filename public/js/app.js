@@ -21991,6 +21991,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['api_token'],
@@ -22056,7 +22057,8 @@ __webpack_require__.r(__webpack_exports__);
       courses: [],
       countries: [],
       ethnics: [],
-      languages: []
+      languages: [],
+      nationalities: []
     };
   },
   created: function created() {
@@ -22064,6 +22066,7 @@ __webpack_require__.r(__webpack_exports__);
     this.getCountries();
     this.getEthnic();
     this.getLanguages();
+    this.getNationalities();
   },
   methods: {
     addRow: function addRow(index, table) {
@@ -22156,6 +22159,14 @@ __webpack_require__.r(__webpack_exports__);
       var self = this;
       axios.get('api/languages').then(function (response) {
         self.languages = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    getNationalities: function getNationalities() {
+      var self = this;
+      axios.get('api/nationalities').then(function (response) {
+        self.nationalities = response.data;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -59220,7 +59231,7 @@ var render = function() {
                                 }
                               ],
                               staticClass: "form-control",
-                              attrs: { id: "nationality", type: "text" },
+                              attrs: { id: "nationality" },
                               on: {
                                 change: function($event) {
                                   var $$selectedVal = Array.prototype.filter
@@ -59243,12 +59254,27 @@ var render = function() {
                               }
                             },
                             [
-                              _c("option", [_vm._v("Select")]),
+                              _c(
+                                "option",
+                                { attrs: { disabled: "", value: "" } },
+                                [_vm._v("Please select one")]
+                              ),
                               _vm._v(" "),
-                              _c("option", [_vm._v("A")]),
-                              _vm._v(" "),
-                              _c("option", [_vm._v("B")])
-                            ]
+                              _vm._l(_vm.nationalities, function(nationality) {
+                                return _c(
+                                  "option",
+                                  { domProps: { value: nationality.id } },
+                                  [
+                                    _vm._v(
+                                      "\n                                                " +
+                                        _vm._s(nationality.nationality_name) +
+                                        "\n                                            "
+                                    )
+                                  ]
+                                )
+                              })
+                            ],
+                            2
                           )
                         ])
                       ]),

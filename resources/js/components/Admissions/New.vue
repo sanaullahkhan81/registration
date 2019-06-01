@@ -63,10 +63,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="nationality">Nationality:</label>
-                                        <select id="nationality" type="text" class="form-control" v-model="admission.student.nationality">
-                                            <option>Select</option>
-                                            <option>A</option>
-                                            <option>B</option>
+                                        <select id="nationality" class="form-control" v-model="admission.student.nationality">
+                                                <option disabled value="">Please select one</option>
+                                                <option v-for="nationality in nationalities" v-bind:value="nationality.id">
+                                                    {{ nationality.nationality_name }}
+                                                </option>
                                         </select>
                                     </div>
                                 </div>
@@ -575,7 +576,8 @@
                 courses:[],
                 countries:[],
                 ethnics:[],
-                languages:[]
+                languages:[],
+                nationalities:[]
             }
         },
         created() {
@@ -583,6 +585,7 @@
             this.getCountries();
             this.getEthnic();
             this.getLanguages();
+            this.getNationalities();
         },
         methods:{
             addRow(index, table) {
@@ -676,6 +679,16 @@
                 axios.get('api/languages')
                         .then(function (response) {
                             self.languages = response.data;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        })
+            },
+            getNationalities(){
+                let self = this;
+                axios.get('api/nationalities')
+                        .then(function (response) {
+                            self.nationalities = response.data;
                         })
                         .catch(function (error) {
                             console.log(error);

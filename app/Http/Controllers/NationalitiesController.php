@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Nationality;
 use Illuminate\Http\Request;
 
-class NationalityController extends Controller
+class NationalitiesController extends Controller
 {
     /**
      * Display a listing of the resource.

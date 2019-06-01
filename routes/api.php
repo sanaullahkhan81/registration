@@ -19,3 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('admissions','Api\AdmissionsController');
 Route::resource('courses', 'Api\CoursesController');
+Route::resource('countries', 'Api\CountriesController');
+Route::resource('ethnics', 'Api\EthnicController');
+Route::resource('languages', 'Api\LanguageController');

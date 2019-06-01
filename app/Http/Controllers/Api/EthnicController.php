@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Ethnic;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class EthnicController extends Controller
 {
@@ -11,12 +12,6 @@ class EthnicController extends Controller
     public function index()
     {
         return Ethnic::select(['id','ethnic_origin_name'])->get();
-    }
-
-
-    public function create()
-    {
-        //
     }
 
     /**
@@ -33,21 +28,10 @@ class EthnicController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Ethnic  $ethnic
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Ethnic $ethnic)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Ethnic  $ethnic
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Ethnic $ethnic)
+    public function show($id)
     {
         //
     }
@@ -56,10 +40,10 @@ class EthnicController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Ethnic  $ethnic
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ethnic $ethnic)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -67,10 +51,10 @@ class EthnicController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Ethnic  $ethnic
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ethnic $ethnic)
+    public function destroy($id)
     {
         //
     }

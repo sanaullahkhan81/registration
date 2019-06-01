@@ -22173,15 +22173,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     saveForm: function saveForm() {
       var self = this;
-      var data = new URLSearchParams();
-      data.append('admission', this.admission);
+      console.log(self.admission); //const data = new URLSearchParams();
+      //data.append('admission', this.admission);
+
       axios({
         method: 'post',
         url: 'api/admissions',
         headers: {
           Authorization: 'Bearer ' + this.api_token
         },
-        data: data
+        data: self.admission
       }).then(function (response) {//
       })["catch"](function (error) {
         console.log(error.response);

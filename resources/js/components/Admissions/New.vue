@@ -696,13 +696,14 @@
             },
             saveForm(){
                 let self = this;
-                const data = new URLSearchParams();
-                data.append('admission', this.admission);
+                console.log(self.admission)
+                //const data = new URLSearchParams();
+                //data.append('admission', this.admission);
                 axios({
                     method: 'post',
                     url: 'api/admissions',
                     headers: { Authorization: 'Bearer ' + this.api_token },
-                    data: data
+                    data: self.admission
                 }).then( (response)  =>{
                     //
                 })

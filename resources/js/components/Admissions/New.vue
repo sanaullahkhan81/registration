@@ -90,10 +90,77 @@
                                         <input id="relation" type="text" class="form-control" v-model="admission.student.relationship_to_child">
                                     </div>
                                 </div>
-                                <span  v-for="course in courses">
-                                    <input type="checkbox" @change="addToList(course.id)">
-                                    <label>{{course.course_name}}</label>
-                                </span>
+                                <ul  v-for="course in courses">
+                                    <li>
+                                        <label>{{course.course_name}}</label>
+                                        <input type="checkbox" @change="addToList(course.id)">
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <h3>Contact</h3>
+                                </div>
+                                <div class="col-md-12 text-center">
+                                    <table class="table-contact">
+                                        <tr>
+                                            <th>Ousman Annsary (Imam)</th>
+                                            <td>07443844312</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Shabbir Ahmad (Admin)</th>
+                                            <td>07982961448<br />01753315618</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3>Child’s Health</h3>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="allergies_details">
+                                            Does your child suffer from any serious illness/allergies?
+                                            If so please give details:</label>
+                                        <textarea id="allergies_details" class="form-control"
+                                                  v-model="admission.health_data.serious_illness_description"
+                                                  @change="serious_illness_update">
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="relevant_info">Any other relevant information:</label>
+                                        <textarea id="relevant_info" class="form-control"
+                                                  v-model="admission.health_data.serious_illness_relevant_info">
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="name_of_surgery">Name of Surgery: </label>
+                                        <textarea id="name_of_surgery" class="form-control"
+                                                  v-model="admission.health_data.surgery_name">
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="name_of_doctor">Name of Doctor: </label>
+                                        <textarea id="name_of_doctor" class="form-control"
+                                                  v-model="admission.health_data.doctor_name">
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="surgery_address">Address of Surgery:  </label>
+                                        <textarea id="surgery_address" class="form-control"
+                                                  v-model="admission.health_data.surgery_address">
+                                        </textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -237,10 +304,32 @@
                         });
             },
             addToList(course){
+                var index = this.admission.courses.indexOf(course);
+                if (index === -1) {
+                    this.admission.courses.push(course);
+                } else {
+                    this.admission.courses.splice(index, 1);
+                }
+                console.log(this.admission.courses)
+            },
+            serious_illness_update(){
+                console.log(this.admission.health_data.serious_illness_description.length)
+                if(this.admission.health_data.serious_illness_description.length > 0){
+                    this.admission.health_data.serious_illness = 1;
+                }// TODO fix this
+                if(this.admission.health_data.serious_illness_description.length === 0){
+                    this.admission.health_data.serious_illness = 0;
+                }
 
-                console.log(course)
             }
         }
     }
 
 </script>
+<style scoped>
+    .table-contact {
+        margin: auto;
+        width: 50% !important;
+        border: 1px solid black;
+    }
+</style>

@@ -29,7 +29,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="first-lang">Mother tongue/First Language:</label>
-                                        <select id="first-lang" class="form-control" v-model="admission.student.first_language">
+                                        <select id="first-lang" class="form-control"
+                                                v-model="admission.student.first_language">
                                                 <option disabled value="">Please select one</option>
                                                 <option v-for="language in languages" v-bind:value="language.id">
                                                     {{ language.language }}
@@ -44,7 +45,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="cob">Country of Birth:</label>
-                                        <select id="cob" class="form-control" v-model="admission.student.country_of_birth">
+                                        <select id="cob" class="form-control"
+                                                v-model="admission.student.country_of_birth">
                                             <option disabled value="">Please select one</option>
                                             <option v-for="country in countries" v-bind:value="country.id">
                                                 {{ country.country_name }}
@@ -63,9 +65,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="nationality">Nationality:</label>
-                                        <select id="nationality" class="form-control" v-model="admission.student.nationality">
+                                        <select id="nationality" class="form-control"
+                                                v-model="admission.student.nationality">
                                                 <option disabled value="">Please select one</option>
-                                                <option v-for="nationality in nationalities" v-bind:value="nationality.id">
+                                                <option v-for="nationality in nationalities"
+                                                        v-bind:value="nationality.id">
                                                     {{ nationality.nationality_name }}
                                                 </option>
                                         </select>
@@ -501,6 +505,73 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3>Office Use Only</h3>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                        <label for="dreceived">Date Received:</label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <datepicker id="dreceived" class="form-control"
+                                                        v-model="admission.offer_of_acceptance.office_use.date_received"
+                                            >
+                                            </datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label for="passport">Passport:</label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input id="passport" type="checkbox" class="form-control"
+                                                   v-model="admission.offer_of_acceptance.office_use.passport" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label for="birth_certificate">Birth Certificate:</label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input id="birth_certificate" type="checkbox" class="form-control"
+                                                   v-model="admission.offer_of_acceptance.office_use.birth_certificate"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label for="enrolment_date">Enrolment Date:</label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <datepicker id="enrolment_date" class="form-control"
+                                                    v-model="admission.offer_of_acceptance.office_use.enrolment_date"
+                                            />
+                                            </datepicker>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label for="application_number">Application Number:</label>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input id="application_number" class="form-control"
+                                                v-model="admission.offer_of_acceptance.office_use.application_number"
+                                            />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </tab-content>
                 </form-wizard>
@@ -569,7 +640,14 @@
                     },
                     offer_of_acceptance:{
                         other_children_at_institute:'',
-                        accept_terms:''
+                        accept_terms:'',
+                        office_use:{
+                            date_received:'',
+                            passport:'',
+                            birth_certificate:'',
+                            enrolment_date: '',
+                            application_number:''
+                        }
                     }
 
                 },

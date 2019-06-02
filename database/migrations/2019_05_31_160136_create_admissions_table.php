@@ -20,6 +20,8 @@ class CreateAdmissionsTable extends Migration
             $table->boolean('other_children_at_institute')->default('false');
             $table->boolean('accept_terms_conditions')->default('false');
             $table->dateTime('date_received')->nullable();
+            $table->boolean('birth_certificate')->nullable();
+            $table->boolean('passport')->nullable();
             $table->dateTime('enrolment_date')->nullable();
             $table->string('application_number')->nullable();
             $table->timestamps();

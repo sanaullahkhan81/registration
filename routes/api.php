@@ -23,3 +23,4 @@ Route::resource('countries', 'Api\CountriesController');
 Route::resource('ethnics', 'Api\EthnicController');
 Route::resource('languages', 'Api\LanguageController');
 Route::resource('nationalities', 'Api\NationalitiesController');
+Route::resource('students', 'Api\StudentsController');

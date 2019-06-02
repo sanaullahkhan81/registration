@@ -10,6 +10,7 @@ class StudentCourse extends Model
         'student_id',
         'course_id'
     ];
+    public $timestamps = false;
     public function student()
     {
         return $this->belongsToMany('App\Student');

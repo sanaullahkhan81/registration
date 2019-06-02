@@ -12,7 +12,7 @@ class Student extends Model
     }
     public function guardians()
     {
-        return $this->belongsToMany('App\Guardian', 'student_guardians');
+        return $this->belongsToMany(Guardian::class, 'student_guardians');
     }
 
     public function emergency_contacts()
@@ -23,5 +23,29 @@ class Student extends Model
     public function health_data()
     {
         return $this->hasOne('App\HealthData');
+    }
+
+    public function admission(){
+        return $this->hasOne('App\Admission');
+    }
+
+    public function language()
+    {
+        return $this->hasOne(Language::class, 'id', 'language_id');
+    }
+
+    public function country()
+    {
+        return $this->hasOne(Country::class, 'id', 'country_id');
+    }
+
+    public function nationality()
+    {
+        return $this->hasOne(Nationality::class, 'id', 'nationality_id');
+    }
+
+    public function ethnic()
+    {
+        return $this->hasOne(Ethnic::class,'id','ethnic_origin_id');
     }
 }

@@ -16,11 +16,11 @@ class CreateGuardiansTable extends Migration
         Schema::create('guardians', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('occupation');
-            $table->text('address');
-            $table->string('post_code');
-            $table->string('telephone');
-            $table->string('mobile');
+            $table->string('occupation')->nullable();
+            $table->text('address')->nullable();
+            $table->string('post_code')->nullable();
+            $table->string('telephone')->nullable();
+            $table->string('mobile')->nullable();
             $table->timestamps();
         });
     }

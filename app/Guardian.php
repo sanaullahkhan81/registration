@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Guardian extends Model
 {
     protected $fillable = [
-        'surname',
-        'forename',
+        'name',
         'occupation',
         'address',
         'post_code',

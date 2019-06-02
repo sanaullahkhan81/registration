@@ -23,14 +23,26 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                   Al-Jannah
-                </a>
-                
-                <a class="navbar-brand" href="{{ url('studentRegister') }}">
-                    Registrations
-                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <a class="navbar-brand" href="{{ url('/') }}"> Al-Jannah</a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('admissions') ? 'active' : '' }}"
+                               href="{{ url('admissions') }}"> Admissions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('studentRegister') ? 'active' : '' }}"
+                               href="{{ url('studentRegister') }}">Registrations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('students') ? 'active' : '' }}"
+                               href="{{ url('students') }}">Students</a>
+                        </li>
+                    </ul>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -76,7 +88,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4 container">
             @yield('content')
         </main>
     </div>

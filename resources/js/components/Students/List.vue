@@ -31,7 +31,7 @@
     Vue.component('grid-norecords', GridNoRecords);
     Vue.component('Grid', Grid);
     export default {
-        name: "AdmissionsList",
+        name: "StudentsList",
         data(){
             return {
                 items: [],
@@ -47,10 +47,11 @@
                     { field: 'created_at', dir: 'desc' }
                 ],
                 columns: [
-                    { field: 'application_number', title: 'App No'},
-                    { field: 'student.forename', title: 'Student Name'},
-                    { field: 'student.surname', title: 'Student Lastname'},
-                    { field: 'student.enrolment_date', title: 'enrolment_date',  filter:'date', cell: this.enrolment_date},
+                    { field: 'forename', title: 'Student Name'},
+                    { field: 'surname', title: 'Student Lastname'},
+                    { field: 'gender', title: 'Gender'},
+                    { field: 'post_code', title: 'Post Code'},
+					{ field: 'date_of_birth', title: 'Post Code',  filter:'date', cell: this.birthday_date},
                     { field: 'id', title: 'Actions', cell: this.cellFunction, width:'100px',filterable:false }
                 ],
             };
@@ -60,7 +61,7 @@
         },
 		methods:{
             fetchList(){
-                let page_url = '/api/admissions/';
+                let page_url = '/api/students/';
                 if(this.page){
                     page_url = page_url + this.page
                 }
@@ -68,7 +69,6 @@
                     method: 'get',
                     url: page_url,
                     params: {
-                        admission_id : this.id,
                         sort: this.sort[0].field,
                         dir:  this.sort[0].dir,
                         filter: this.filter
@@ -107,7 +107,7 @@
                     h('a', {
                         attrs: {
                             class: 'btn btn-xs btn-primary',
-                            href: '/admissions/'+props.dataItem.id
+                            href: '/students/'+props.dataItem.id
                         },
                         domProps: {
                             innerHTML: '<i class="fa fa-eye" aria-hidden="true"></i>'
@@ -115,8 +115,8 @@
                     })
                 ]);
             },
-            enrolment_date: function (h, tdElement , props, clickHandler ) {
-                return h('td', props.dataItem.enrolment_date.substring(0,10));
+            birthday_date: function (h, tdElement , props, clickHandler ) {
+                return h('td', props.dataItem.date_of_birth.substring(0,10));
             },
 		}
     }

@@ -5,20 +5,33 @@ namespace App\Http\Controllers\Api;
 use App\Admission;
 use App\Course;
 use App\EmergencyContact;
+use App\FormerCourse;
 use App\Guardian;
 use App\HealthData;
 use App\Student;
 use App\StudentCourse;
 use App\StudentGuardian;
+use App\Utility\Filter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class AdmissionsController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        return Admission::with('student')->paginate();
+        $result = Admission::with('student');
+        if($request->get('filter')){
+            $filters = json_decode($request->get('filter'))->filters;
+            foreach ($filters as $filter){
+
+                $result = Filter::filter($filter, $result);
+            }
+        }
+        if($request->get('sort') && $request->get('dir')){
+            $result->orderBy($request->get('sort'),$request->get('dir'));
+        }
+        return $result->paginate(10);
     }
 
     /**
@@ -45,6 +58,7 @@ class AdmissionsController extends Controller
         $student->ethnic_origin_id = $request->student['ethnic_origin'];
         $student->language_id = $request->student['first_language'];
         $student->nationality_id = $request->student['nationality'];
+        $student->save();
 
         // Save Courses
         if($request->courses){
@@ -69,12 +83,12 @@ class AdmissionsController extends Controller
         if($request->guardians){
             foreach ($request->guardians as $guardian){
                 $guardian = Guardian::create([
-                                'name' => $request->guardians['name'],
-                                'occupation' => $request->guardians['occupation'],
-                                'address' => $request->guardians['address'],
-                                'post_code' => $request->guardians['post_code'],
-                                'telephone' => $request->guardians['contact_number'],
-                                'mobile' => $request->guardians['mobile_number'],
+                                'name' => $guardian['name'],
+                                'occupation' => $guardian['occupation'],
+                                'address' => $guardian['address'],
+                                'post_code' => $guardian['post_code'],
+                                'telephone' => $guardian['contact_number'],
+                                'mobile' => $guardian['mobile_number'],
                             ]);
 
                 StudentGuardian::create([
@@ -84,7 +98,7 @@ class AdmissionsController extends Controller
             }
         }
         if($request->emergency_contacts){
-            foreach ($request->emergeny_contacts as $contact){
+            foreach ($request->emergency_contacts as $contact){
                 EmergencyContact::create([
                     'student_id' => $student->id,
                     'name' => $contact['name'],
@@ -94,8 +108,31 @@ class AdmissionsController extends Controller
 
         }
 
-        // TODO add former education somewhere
-        $offer_of_acceptance = $request->offer_of_acceptance;
+        if($request->additional_education){
+            FormerCourse::create([
+                'student_id' => $student->id,
+                'madrasa_name' => $request->additional_education['madrasa_name'],
+                'teacher_name' => $request->additional_education['teacher'],
+                'teacher_number' => $request->additional_education['number'],
+                'books' => $request->additional_education['books'],
+                'leaving_reason' => $request->additional_education['leaving_reason'],
+                'former_education_details' => $request->additional_education['former_education_details'],
+            ]);
+        }
+
+        if($request->offer_of_acceptance){
+            Admission::create([
+                'student_id' => $student->id,
+                'other_children_at_institute' => $request->offer_of_acceptance['other_children_at_institute'],
+                'accept_terms_conditions' => $request->offer_of_acceptance['accept_terms'],
+                'date_received' => $request->offer_of_acceptance['office_use']['date_received'],
+                'passport' => $request->offer_of_acceptance['office_use']['passport'],
+                'birth_certificate' => $request->offer_of_acceptance['office_use']['birth_certificate'],
+                'enrolment_date' => $request->offer_of_acceptance['office_use']['enrolment_date'],
+                'application_number' => $request->offer_of_acceptance['office_use']['application_number']
+            ]);
+
+        }
 
         dd($request);
     }

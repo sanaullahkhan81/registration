@@ -41,12 +41,12 @@ class StudentsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Student  $student
+     * @param  int  $student_id
      * @return \Illuminate\Http\Response
      */
-    public function show(Student $student)
+    public function show($student_id)
     {
-        return view('students.show');
+        return view('students.show')->with('student_id',$student_id);
     }
 
     /**

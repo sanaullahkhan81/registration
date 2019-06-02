@@ -10,4 +10,6 @@ class StudentGuardian extends Model
         'student_id',
         'guardian_id'
     ];
+
+    public $timestamps = false;
 }

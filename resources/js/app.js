@@ -25,7 +25,8 @@ Vue.use(VueFormWizard);
 Vue.component('newregistration', require('./components/Admissions/New').default);
 Vue.component('admissionslist', require('./components/Admissions/List').default);
 Vue.component('admissionsshow', require('./components/Admissions/Show').default);
-
+Vue.component('studentslist', require('./components/Students/List').default);
+Vue.component('studentshow', require('./components/Students/Show').default);
 
 
 

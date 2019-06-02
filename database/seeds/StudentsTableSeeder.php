@@ -1,5 +1,6 @@
 <?php
 
+use App\FormerCourse;
 use App\Guardian;
 use App\HealthData;
 use App\StudentCourse;
@@ -21,6 +22,7 @@ class StudentsTableSeeder extends Seeder
         Guardian::truncate();
         StudentGuardian::truncate();
         HealthData::truncate();
+        FormerCourse::truncate();
 
         factory(App\Student::class, 200)->create()->each(function ($student){
 
@@ -36,6 +38,9 @@ class StudentsTableSeeder extends Seeder
 
             // Health data
            factory('App\HealthData')->create(['student_id' => $student->id]);
+
+           // Former Course
+            factory('App\FormerCourse')->create(['student_id' => $student->id]);
 
         });
     }

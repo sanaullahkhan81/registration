@@ -5,32 +5,17 @@
             <div class="col-sm-12" style="background-color:white;">
                 <form-wizard title="Masjid Al-Jannah Community Islamic School" subtitle="Admission Form">
                     <tab-content title="Section 1- Child’s Details">
-                        <div>
-                            <b-form inline>
-                                <label class="sr-only" for="inline-form-input-name">Name</label>
-                                <b-input
-                                        id="inline-form-input-name"
-                                        class="mb-2 mr-sm-2 mb-sm-0"
-                                        placeholder="Jane Doe"
-                                ></b-input>
 
-                                <label class="sr-only" for="inline-form-input-username">Username</label>
-                                <b-input-group prepend="@" class="mb-2 mr-sm-2 mb-sm-0">
-                                    <b-input id="inline-form-input-username" placeholder="Username"></b-input>
-                                </b-input-group>
-
-                                <b-form-checkbox class="mb-2 mr-sm-2 mb-sm-0">Remember me</b-form-checkbox>
-
-                                <b-button variant="primary">Save</b-button>
-                            </b-form>
-                        </div>
 
                     </tab-content>
-                    <tab-content title="Additional Info">
-                        My second tab content
+                    <tab-content title="Section 2- Parents/Guardians Details">
+
                     </tab-content>
-                    <tab-content title="Last step">
-                        Yuhuuu! This seems pretty damn simple
+                    <tab-content title="Section 3">
+
+                    </tab-content>
+                    <tab-content title="Section 4- Offer of Acceptance">
+
                     </tab-content>
                 </form-wizard>
             </div>
@@ -62,3 +47,15 @@
     }
 
 </script>
+
+<style scoped>
+    @media screen and (max-width: 767px) {.tg {width: auto !important;}.tg col {width: auto !important;}.tg-wrap {overflow-x: auto;-webkit-overflow-scrolling: touch;margin: auto 0px;}}
+.tg  {border-collapse:collapse;border-spacing:0;margin:0px auto;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+.tg .tg-1wig{font-weight:bold;text-align:left;vertical-align:top}
+.tg .tg-xldj{border-color:inherit;text-align:left}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+.tg .tg-amwm{font-weight:bold;text-align:center;vertical-align:top}
+</style>

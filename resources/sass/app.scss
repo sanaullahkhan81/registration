@@ -1,6 +1,7 @@
 
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
+@import "~@fortawesome/fontawesome-free/css/all.css";
 
 // Variables
 @import 'variables';
@@ -12,3 +13,4 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+div.vdp-datepicker>div>input{width:100%;border:0;}

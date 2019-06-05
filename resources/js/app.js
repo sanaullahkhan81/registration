@@ -21,11 +21,14 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('newregistration', require('./components/newRegistration').default);
-//global registration
-
 Vue.use(VueFormWizard);
+Vue.component('newregistration', require('./components/Admissions/New').default);
+Vue.component('admissionslist', require('./components/Admissions/List').default);
+Vue.component('admissionsshow', require('./components/Admissions/Show').default);
+Vue.component('studentslist', require('./components/Students/List').default);
+Vue.component('studentshow', require('./components/Students/Show').default);
+
+
 
 
 /**

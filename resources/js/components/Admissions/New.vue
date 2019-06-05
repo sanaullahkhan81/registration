@@ -697,6 +697,11 @@
                 axios.get('/api/students/'+this.student_id)
                     .then(function (response) {
                         self.admission.student = response.data;
+                        self.admission.student.country_of_birth = response.data.country_id;
+                        self.admission.student.ethnic_origin = response.data.ethnic_origin_id;
+                        self.admission.student.nationality = response.data.nationality_id;
+                        self.admission.student.first_language = response.data.language_id;
+                        self.admission.health_data = response.data.health_data;
                         console.log(response)
                     })
                     .catch(function (error) {

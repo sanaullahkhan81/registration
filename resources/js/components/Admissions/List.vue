@@ -106,11 +106,20 @@
                 return h('td',  [
                     h('a', {
                         attrs: {
-                            class: 'btn btn-xs btn-primary',
+                            class: 'space',
                             href: '/admissions/'+props.dataItem.id
                         },
                         domProps: {
                             innerHTML: '<i class="fa fa-eye" aria-hidden="true"></i>'
+                        }
+                    }),
+                    h('a', {
+                        attrs: {
+                            class: 'space',
+                            href: '/admissions/'+props.dataItem.id+'/edit'
+                        },
+                        domProps: {
+                            innerHTML: '<i class="fa fa-edit" aria-hidden="true"></i>'
                         }
                     })
                 ]);
@@ -122,6 +131,9 @@
     }
 </script>
 
-<style scoped>
-
+<style>
+	a.space {
+		margin-left: 1em;
+		margin-right: 0.2em;
+	}
 </style>

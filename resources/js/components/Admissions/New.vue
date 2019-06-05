@@ -4,8 +4,8 @@
         <div class="row">
             <div class="col-sm-12" style="background-color:white;">
                 <form-wizard title="Masjid Al-Jannah Community Islamic School"
-                             subtitle="Admission Form" @on-complete="saveForm">
-                    <tab-content title="Section 1- Child’s Details">
+                             subtitle="Admission Form" @on-complete="saveForm" >
+                    <tab-content title="Section 1- Child’s Details" :before-change="beforeTabSwitch">
                         <div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -655,7 +655,8 @@
                 countries:[],
                 ethnics:[],
                 languages:[],
-                nationalities:[]
+                nationalities:[],
+                errors: []
             }
         },
 
@@ -680,6 +681,13 @@
         }],
     },
         methods:{
+            beforeTabSwitch(){
+                // Adding fields here for error checking
+              if(this.admission.student.forename.length < 2){
+                  return false;
+              }
+              return true;
+            },
             createForm(){ // when form is not new
                 //Do api calls
                 let self =this;

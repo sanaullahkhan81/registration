@@ -26,7 +26,7 @@ class Student extends Model
     }
 
     public function admission(){
-        return $this->hasOne('App\Admission');
+        return $this->hasOne('App\Admission')->whereNotNull('enrolment_date');
     }
 
     public function language()

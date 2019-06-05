@@ -18,9 +18,8 @@ class StudentsController extends Controller
      */
     public function index(Request $request)
     {
-//        return response(Student::paginate(),200);
 
-        $result = Student::with('courses');
+        $result = Student::with('courses','admission','health_data');
         if($request->get('filter')){
             $filters = json_decode($request->get('filter'))->filters;
             foreach ($filters as $filter){
@@ -31,6 +30,7 @@ class StudentsController extends Controller
         if($request->get('sort') && $request->get('dir')){
             $result->orderBy($request->get('sort'),$request->get('dir'));
         }
+
         return $result->paginate(10);
     }
 

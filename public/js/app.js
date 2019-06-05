@@ -22065,7 +22065,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['api_token'],
+  props: ['api_token', 'admission_id', 'student_id'],
   components: {
     Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -22140,6 +22140,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
+    if (typeof this.admission_id !== "undefined") {
+      console.log('An existing Form');
+      this.createForm();
+    }
+
     this.getCourses();
     this.getCountries();
     this.getEthnic();
@@ -22154,6 +22159,20 @@ __webpack_require__.r(__webpack_exports__);
     }]
   },
   methods: {
+    createForm: function createForm() {
+      // when form is not new
+      //Do api calls
+      var self = this; // Get data and assign
+      // api call to /api/students/this.student_id
+      // use this.student_id
+
+      axios.get('/api/students/' + this.student_id).then(function (response) {
+        self.admission.student = response.data;
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     addRow: function addRow(index, table) {
       var self = this;
 
@@ -22193,7 +22212,7 @@ __webpack_require__.r(__webpack_exports__);
       var self = this;
       axios({
         method: 'get',
-        url: 'api/courses',
+        url: '/api/courses',
         headers: {
           Authorization: 'Bearer ' + this.api_token
         }
@@ -22226,7 +22245,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getCountries: function getCountries() {
       var self = this;
-      axios.get('api/countries').then(function (response) {
+      axios.get('/api/countries').then(function (response) {
         self.countries = response.data;
       })["catch"](function (error) {
         console.log(error);
@@ -22234,7 +22253,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getEthnic: function getEthnic() {
       var self = this;
-      axios.get('api/ethnics').then(function (response) {
+      axios.get('/api/ethnics').then(function (response) {
         self.ethnics = response.data;
       })["catch"](function (error) {
         console.log(error);
@@ -22242,7 +22261,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getLanguages: function getLanguages() {
       var self = this;
-      axios.get('api/languages').then(function (response) {
+      axios.get('/api/languages').then(function (response) {
         self.languages = response.data;
       })["catch"](function (error) {
         console.log(error);
@@ -22250,7 +22269,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getNationalities: function getNationalities() {
       var self = this;
-      axios.get('api/nationalities').then(function (response) {
+      axios.get('/api/nationalities').then(function (response) {
         self.nationalities = response.data;
       })["catch"](function (error) {
         console.log(error);
@@ -75906,8 +75925,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\registrations\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\registrations\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/minas/code/registration/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/minas/code/registration/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

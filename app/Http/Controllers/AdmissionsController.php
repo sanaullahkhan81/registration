@@ -15,7 +15,7 @@ class AdmissionsController extends Controller
     public function index()
     {
 //        dd(Admission::with('student')->first());
-        return view('admissions.index');
+        return view('Admissions.index');
     }
 
     /**
@@ -53,7 +53,8 @@ class AdmissionsController extends Controller
      */
     public function edit(Admission $admission)
     {
-        //
+
+        return view('Admissions.edit')->with('admission',$admission);
     }
 
     /**

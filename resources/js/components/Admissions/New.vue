@@ -585,7 +585,7 @@
 <script>
     import Datepicker from 'vuejs-datepicker';
     export default {
-        props:['api_token'],
+        props:['api_token','admission_id','student_id'],
         components: {Datepicker},
         data(){
             return{
@@ -660,6 +660,10 @@
         },
 
         created() {
+            if(typeof this.admission_id !== "undefined"){
+                console.log('An existing Form')
+                this.createForm();
+            }
             this.getCourses();
             this.getCountries();
             this.getEthnic();
@@ -676,6 +680,21 @@
         }],
     },
         methods:{
+            createForm(){ // when form is not new
+                //Do api calls
+                let self =this;
+                // Get data and assign
+                // api call to /api/students/this.student_id
+                // use this.student_id
+                axios.get('/api/students/'+this.student_id)
+                    .then(function (response) {
+                        self.admission.student = response.data;
+                        console.log(response)
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+            },
             addRow(index, table) {
                 let self = this;
                 if(table === 'additional_education')
@@ -713,7 +732,7 @@
                 let self = this;
                 axios({
                     method: 'get',
-                    url: 'api/courses',
+                    url: '/api/courses',
                     headers: {
                         Authorization: 'Bearer ' + this.api_token
                     }
@@ -744,7 +763,7 @@
             },
             getCountries(){
                 let self = this;
-                axios.get('api/countries')
+                axios.get('/api/countries')
                 .then(function (response) {
                     self.countries = response.data;
                 })
@@ -754,7 +773,7 @@
             },
             getEthnic(){
                 let self = this;
-                axios.get('api/ethnics')
+                axios.get('/api/ethnics')
                         .then(function (response) {
                             self.ethnics = response.data;
                         })
@@ -764,7 +783,7 @@
             },
             getLanguages(){
                 let self = this;
-                axios.get('api/languages')
+                axios.get('/api/languages')
                         .then(function (response) {
                             self.languages = response.data;
                         })
@@ -774,7 +793,7 @@
             },
             getNationalities(){
                 let self = this;
-                axios.get('api/nationalities')
+                axios.get('/api/nationalities')
                         .then(function (response) {
                             self.nationalities = response.data;
                         })

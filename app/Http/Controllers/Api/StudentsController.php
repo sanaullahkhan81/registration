@@ -19,7 +19,7 @@ class StudentsController extends Controller
     public function index(Request $request)
     {
 
-        $result = Student::with('courses','admission','health_data');
+        $result = Student::with('courses','admission')->has('admission');
         if($request->get('filter')){
             $filters = json_decode($request->get('filter'))->filters;
             foreach ($filters as $filter){

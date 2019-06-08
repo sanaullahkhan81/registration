@@ -21388,11 +21388,6 @@ Vue.component('Grid', _progress_kendo_vue_grid__WEBPACK_IMPORTED_MODULE_1__["Gri
         field: 'student.surname',
         title: 'Student Lastname'
       }, {
-        field: 'student.enrolment_date',
-        title: 'enrolment_date',
-        filter: 'date',
-        cell: this.enrolment_date
-      }, {
         field: 'id',
         title: 'Actions',
         cell: this.cellFunction,
@@ -21468,9 +21463,6 @@ Vue.component('Grid', _progress_kendo_vue_grid__WEBPACK_IMPORTED_MODULE_1__["Gri
           innerHTML: '<i class="fa fa-edit" aria-hidden="true"></i>'
         }
       })]);
-    },
-    enrolment_date: function enrolment_date(h, tdElement, props, clickHandler) {
-      return h('td', props.dataItem.enrolment_date.substring(0, 10));
     }
   }
 });
@@ -21487,6 +21479,17 @@ Vue.component('Grid', _progress_kendo_vue_grid__WEBPACK_IMPORTED_MODULE_1__["Gri
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -22145,7 +22148,24 @@ __webpack_require__.r(__webpack_exports__);
       ethnics: [],
       languages: [],
       nationalities: [],
-      errors: []
+      errors: [],
+      rules: {
+        user: [{
+          required: true,
+          message: 'Please input Activity name',
+          trigger: 'blur'
+        }, {
+          min: 3,
+          max: 5,
+          message: 'Length should be 3 to 5',
+          trigger: 'blur'
+        }],
+        region: [{
+          required: true,
+          message: 'Please select Activity zone',
+          trigger: 'change'
+        }]
+      }
     };
   },
   created: function created() {
@@ -22160,13 +22180,6 @@ __webpack_require__.r(__webpack_exports__);
     this.getLanguages();
     this.getNationalities();
   },
-  rules: {
-    surname: [{
-      required: true,
-      message: 'Please input Surname name',
-      trigger: 'blur'
-    }]
-  },
   methods: {
     beforeTabSwitch: function beforeTabSwitch() {
       // Adding fields here for error checking
@@ -22178,11 +22191,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     createForm: function createForm() {
       // when form is not new
-      //Do api calls
-      var self = this; // Get data and assign
-      // api call to /api/students/this.student_id
-      // use this.student_id
-
+      var self = this;
       axios.get('/api/students/' + this.student_id).then(function (response) {
         self.admission.student = response.data;
         self.admission.student.country_of_birth = response.data.country_id;
@@ -22190,7 +22199,42 @@ __webpack_require__.r(__webpack_exports__);
         self.admission.student.nationality = response.data.nationality_id;
         self.admission.student.first_language = response.data.language_id;
         self.admission.health_data = response.data.health_data;
-        console.log(response);
+        self.admission.guardians = response.data.guardians;
+
+        if (response.data.emergency_contacts && response.data.emergency_contacts.length) {
+          self.admission.emergency_contacts = response.data.emergency_contacts;
+        }
+
+        if (response.data.admission && Object.keys(response.data.admission).length) {
+          console.log(response.data.admission);
+          var key = self.admission.offer_of_acceptance;
+          var source = response.data.admission;
+          key.other_children_at_institute = source.other_children_at_institute;
+
+          if (source.accept_terms_conditions === 'true') {
+            key.accept_terms = 1;
+          } else {
+            key.accept_terms = 0;
+          } // self.admission.offer_of_acceptance = response.data.admission;
+
+
+          if (typeof response.data.admission.office_use !== "undefined") {
+            alert('2');
+            self.admission.offer_of_acceptance.office_use = [{
+              date_received: '',
+              passport: '',
+              birth_certificate: '',
+              enrolment_date: '',
+              application_number: ''
+            }];
+          }
+        }
+
+        self.admission.additional_education = response.data.former_course[0]; // self.admission.courses = response.data.courses;
+
+        response.data.courses.forEach(function (course) {
+          self.addToList(course.id);
+        });
       })["catch"](function (error) {
         console.log(error);
       });
@@ -22245,15 +22289,18 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     addToList: function addToList(course) {
-      var index = this.admission.courses.indexOf(course);
+      //console.log(course)
+      var index = this.admission.courses.indexOf(course); //console.log(index);
 
       if (index === -1) {
         this.admission.courses.push(course);
       } else {
         this.admission.courses.splice(index, 1);
-      }
+      } // console.log(this.admission.courses)
 
-      console.log(this.admission.courses);
+    },
+    isChecked: function isChecked(index) {
+      return this.admission.courses.id === this.courses[index].id;
     },
     serious_illness_update: function serious_illness_update() {
       if (this.admission.health_data.serious_illness_description.length > 0) {
@@ -22298,20 +22345,37 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     saveForm: function saveForm() {
-      var self = this;
-      console.log(self.admission); //const data = new URLSearchParams();
+      var self = this; //const data = new URLSearchParams();
       //data.append('admission', this.admission);
 
+      if (typeof this.admission_id !== "undefined") {
+        var type = "PUT";
+        var url = '/api/admissions/' + this.admission_id;
+      } else {
+        var type = "POST";
+        var url = 'api/admissions';
+      }
+
       axios({
-        method: 'post',
-        url: 'api/admissions',
+        method: type,
+        url: url,
         headers: {
           Authorization: 'Bearer ' + this.api_token
         },
         data: self.admission
-      }).then(function (response) {//
+      }).then(function (response) {
+        console.log(response); //window.location = '/admissions';
       })["catch"](function (error) {
         console.log(error.response);
+      });
+    },
+    validateFirstStep: function validateFirstStep() {
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        _this.$refs.ruleForm.validate(function (valid) {
+          resolve(valid);
+        });
       });
     }
   }
@@ -59514,9 +59578,9 @@ var render = function() {
                                   { domProps: { value: language.id } },
                                   [
                                     _vm._v(
-                                      "\n                                                " +
+                                      "\n                                                    " +
                                         _vm._s(language.language) +
-                                        "\n                                            "
+                                        "\n                                                "
                                     )
                                   ]
                                 )
@@ -59613,9 +59677,9 @@ var render = function() {
                                   { domProps: { value: country.id } },
                                   [
                                     _vm._v(
-                                      "\n                                            " +
+                                      "\n                                                " +
                                         _vm._s(country.country_name) +
-                                        "\n                                        "
+                                        "\n                                            "
                                     )
                                   ]
                                 )
@@ -59677,9 +59741,9 @@ var render = function() {
                                   { domProps: { value: ethnic.id } },
                                   [
                                     _vm._v(
-                                      "\n                                                " +
+                                      "\n                                                    " +
                                         _vm._s(ethnic.ethnic_origin_name) +
-                                        "\n                                            "
+                                        "\n                                                "
                                     )
                                   ]
                                 )
@@ -59741,9 +59805,9 @@ var render = function() {
                                   { domProps: { value: nationality.id } },
                                   [
                                     _vm._v(
-                                      "\n                                                " +
+                                      "\n                                                    " +
                                         _vm._s(nationality.nationality_name) +
-                                        "\n                                            "
+                                        "\n                                                "
                                     )
                                   ]
                                 )
@@ -59940,20 +60004,65 @@ var render = function() {
                         _c(
                           "ul",
                           { staticClass: "list-group" },
-                          _vm._l(_vm.courses, function(course) {
+                          _vm._l(_vm.courses, function(course, index) {
                             return _c(
                               "li",
                               { staticClass: "list-group-item" },
                               [
-                                _c("label", [
+                                _c("label", { attrs: { for: course.id } }, [
                                   _vm._v(_vm._s(course.course_name))
                                 ]),
                                 _vm._v(" "),
                                 _c("input", {
-                                  attrs: { type: "checkbox" },
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.admission.courses,
+                                      expression: "admission.courses"
+                                    }
+                                  ],
+                                  attrs: { type: "checkbox", id: course.id },
+                                  domProps: {
+                                    value: course.id,
+                                    checked: _vm.isChecked(index),
+                                    checked: Array.isArray(
+                                      _vm.admission.courses
+                                    )
+                                      ? _vm._i(
+                                          _vm.admission.courses,
+                                          course.id
+                                        ) > -1
+                                      : _vm.admission.courses
+                                  },
                                   on: {
                                     change: function($event) {
-                                      return _vm.addToList(course.id)
+                                      var $$a = _vm.admission.courses,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = course.id,
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            _vm.$set(
+                                              _vm.admission,
+                                              "courses",
+                                              $$a.concat([$$v])
+                                            )
+                                        } else {
+                                          $$i > -1 &&
+                                            _vm.$set(
+                                              _vm.admission,
+                                              "courses",
+                                              $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1))
+                                            )
+                                        }
+                                      } else {
+                                        _vm.$set(_vm.admission, "courses", $$c)
+                                      }
                                     }
                                   }
                                 })
@@ -60004,7 +60113,7 @@ var render = function() {
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", { attrs: { for: "allergies_details" } }, [
                             _vm._v(
-                              "\n                                        Does your child suffer from any serious illness/allergies?\n                                        If so please give details:"
+                              "\n                                            Does your child suffer from any serious illness/allergies?\n                                            If so please give details:"
                             )
                           ]),
                           _vm._v(" "),
@@ -60213,9 +60322,9 @@ var render = function() {
                           { key: row.id, staticClass: "table" },
                           [
                             _vm._v(
-                              "\n                                Parent /  Guardinan : # " +
+                              "\n                                    Parent /  Guardinan : # " +
                                 _vm._s($index + 1) +
-                                "\n                                "
+                                "\n                                    "
                             ),
                             _c("tr", [
                               _c("th", [_vm._v("Name")]),
@@ -60563,7 +60672,7 @@ var render = function() {
                   _c("div", { staticClass: "col-md-12 text-center" }, [
                     _c("h3", [
                       _vm._v(
-                        "(Only to be filled in if your child has attended a Madrasa\n                                or has had home tuition, etc.)"
+                        "(Only to be filled in if your child has attended a Madrasa\n                                    or has had home tuition, etc.)"
                       )
                     ])
                   ]),
@@ -60689,7 +60798,7 @@ var render = function() {
                   _c("div", { staticClass: "col-md-12" }, [
                     _c("p", [
                       _vm._v(
-                        "Please give full details with names of all the Islamic books he has studied\n                               to date and how much Qaida or Qur’an has been read:\n                            "
+                        "Please give full details with names of all the Islamic books he has studied\n                                   to date and how much Qaida or Qur’an has been read:\n                                "
                       )
                     ]),
                     _vm._v(" "),
@@ -60846,7 +60955,7 @@ var render = function() {
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "leaving_reason" } }, [
                         _vm._v(
-                          "Why is your child leaving their current Madrasa?\n                                "
+                          "Why is your child leaving their current Madrasa?\n                                    "
                         )
                       ]),
                       _vm._v(" "),
@@ -60890,7 +60999,7 @@ var render = function() {
                         { attrs: { for: "former_education_details" } },
                         [
                           _vm._v(
-                            "\n                                    Please provide any other detail you think will be useful for us:\n                                "
+                            "\n                                        Please provide any other detail you think will be useful for us:\n                                    "
                           )
                         ]
                       ),
@@ -61043,7 +61152,7 @@ var render = function() {
                       _c("div", { staticClass: "col-md-12" }, [
                         _c("p", [
                           _vm._v(
-                            "\n                                    Please note that there may be a waiting list and places would be awarded\n                                    on a first come first served basis. There is an equal opportunity policy\n                                    in operation. There will also be a short assessment to check the child’s\n                                    ability.\n                                    I hereby apply for my child to be admitted Masjid Al-Jannah\n                                    Community Islamic School. I agree to abide by all the schools\n                                    regulations and will support the ethos and Islamic Practices.\n                                "
+                            "\n                                        Please note that there may be a waiting list and places would be awarded\n                                        on a first come first served basis. There is an equal opportunity policy\n                                        in operation. There will also be a short assessment to check the child’s\n                                        ability.\n                                        I hereby apply for my child to be admitted Masjid Al-Jannah\n                                        Community Islamic School. I agree to abide by all the schools\n                                        regulations and will support the ethos and Islamic Practices.\n                                    "
                           )
                         ]),
                         _vm._v(" "),
@@ -61054,55 +61163,55 @@ var render = function() {
                         _c("ol", [
                           _c("li", [
                             _vm._v(
-                              "\n                                        To dress our children in an Islamic way is very important.\n                                        All children must dress appropriately, for boys A White\n                                        Kurta/Thawb/Shalwar Kameez/Jubba etc.,\n                                        Trousers (that stay above the ankles at all times) and a Hat.\n                                        Clothing should not contain pictures or large writings.\n                                    "
+                              "\n                                            To dress our children in an Islamic way is very important.\n                                            All children must dress appropriately, for boys A White\n                                            Kurta/Thawb/Shalwar Kameez/Jubba etc.,\n                                            Trousers (that stay above the ankles at all times) and a Hat.\n                                            Clothing should not contain pictures or large writings.\n                                        "
                             )
                           ]),
                           _vm._v(" "),
                           _c("li", [
                             _vm._v(
-                              "\n                                        Uneven haircuts are not allowed in Islam.  Therefore short back and\n                                        sides or any other styles are not allowed. Any child with un-Islamic\n                                        haircut will not be allowed in the Madrasah.\n                                    "
+                              "\n                                            Uneven haircuts are not allowed in Islam.  Therefore short back and\n                                            sides or any other styles are not allowed. Any child with un-Islamic\n                                            haircut will not be allowed in the Madrasah.\n                                        "
                             )
                           ]),
                           _vm._v(" "),
                           _c("li", [
                             _vm._v(
-                              "\n                                        Parent(s)/Guardian(s) are obliged to respect the timings. Punctual\n                                        attendance of the times given is necessary from Monday to Friday. Students\n                                        are expected to arrive on time for classes and any late arrivals or\n                                        absentees will not be tolerated.\n                                    "
+                              "\n                                            Parent(s)/Guardian(s) are obliged to respect the timings. Punctual\n                                            attendance of the times given is necessary from Monday to Friday. Students\n                                            are expected to arrive on time for classes and any late arrivals or\n                                            absentees will not be tolerated.\n                                        "
                             )
                           ]),
                           _vm._v(" "),
                           _c("li", [
                             _vm._v(
-                              "\n                                        All absences must be explained by a note signed by the\n                                        parent/guardian upon return.\n                                    "
+                              "\n                                            All absences must be explained by a note signed by the\n                                            parent/guardian upon return.\n                                        "
                             )
                           ]),
                           _vm._v(" "),
                           _c("li", [
                             _vm._v(
-                              "\n                                        In the case of any event whereby the student needs to take a number of\n                                        days off, permission should be sought from the Head Teacher.\n                                    "
+                              "\n                                            In the case of any event whereby the student needs to take a number of\n                                            days off, permission should be sought from the Head Teacher.\n                                        "
                             )
                           ]),
                           _vm._v(" "),
                           _c("li", [
                             _vm._v(
-                              "\n                                        A re-registration fee will apply for any child who leaves the madrasah\n                                        and wishes to re-join subject to availability.\n                                    "
+                              "\n                                            A re-registration fee will apply for any child who leaves the madrasah\n                                            and wishes to re-join subject to availability.\n                                        "
                             )
                           ]),
                           _vm._v(" "),
                           _c("li", [
                             _vm._v(
-                              "\n                                        Parents/guardians shall be expected to ensure that the child prepares for\n                                        his/her lessons at home.\n                                    "
+                              "\n                                            Parents/guardians shall be expected to ensure that the child prepares for\n                                            his/her lessons at home.\n                                        "
                             )
                           ]),
                           _vm._v(" "),
                           _c("li", [
                             _vm._v(
-                              "\n                                        Any queries or complaints should be made only to the Head teacher\n                                        not directly to a teacher. There must be no interruptions made by\n                                        any parent or representative whilst teaching is in progress.\n                                    "
+                              "\n                                            Any queries or complaints should be made only to the Head teacher\n                                            not directly to a teacher. There must be no interruptions made by\n                                            any parent or representative whilst teaching is in progress.\n                                        "
                             )
                           ]),
                           _vm._v(" "),
                           _c("li", [
                             _vm._v(
-                              "\n                                        Any behavioural problems from a student will not be tolerated and\n                                        appropriate action will be taken. The Madrasah has a strict 4 stage\n                                        behaviour policy. If the student misbehaves then these steps will be\n                                        taken in sequence, though some behaviour may result in immediate expulsion.\n                                        "
+                              "\n                                            Any behavioural problems from a student will not be tolerated and\n                                            appropriate action will be taken. The Madrasah has a strict 4 stage\n                                            behaviour policy. If the student misbehaves then these steps will be\n                                            taken in sequence, though some behaviour may result in immediate expulsion.\n                                            "
                             ),
                             _c(
                               "ul",
@@ -61111,28 +61220,28 @@ var render = function() {
                                 _c("li", { staticClass: "list-group-item" }, [
                                   _c("b", [_vm._v("Stage 1:")]),
                                   _vm._v(
-                                    " A verbal warning\n                                            "
+                                    " A verbal warning\n                                                "
                                   )
                                 ]),
                                 _vm._v(" "),
                                 _c("li", { staticClass: "list-group-item" }, [
                                   _c("b", [_vm._v("Stage 2:")]),
                                   _vm._v(
-                                    " The Head Teacher will discuss the matter with the\n                                                student and Detention given.\n                                            "
+                                    " The Head Teacher will discuss the matter with the\n                                                    student and Detention given.\n                                                "
                                   )
                                 ]),
                                 _vm._v(" "),
                                 _c("li", { staticClass: "list-group-item" }, [
                                   _c("b", [_vm._v("Stage 3:")]),
                                   _vm._v(
-                                    " Letter will be sent home and The Parents/Guardians\n                                                of the child will be called in to have a meeting with the\n                                                Head Teacher and class Teacher and the student may be suspended.\n                                            "
+                                    " Letter will be sent home and The Parents/Guardians\n                                                    of the child will be called in to have a meeting with the\n                                                    Head Teacher and class Teacher and the student may be suspended.\n                                                "
                                   )
                                 ]),
                                 _vm._v(" "),
                                 _c("li", { staticClass: "list-group-item" }, [
                                   _c("b", [_vm._v("Stage 4:")]),
                                   _vm._v(
-                                    " The student will be excluded if deemed appropriate\n                                            "
+                                    " The student will be excluded if deemed appropriate\n                                                "
                                   )
                                 ])
                               ]
@@ -61141,66 +61250,66 @@ var render = function() {
                           _vm._v(" "),
                           _c("li", [
                             _vm._v(
-                              "\n                                        The Madrasah has a detention policy which applies to all children,\n                                        irrespective of age. Any Teacher or the Head Teacher can give detention\n                                        to any child if they consider it necessary and has the right to keep\n                                        the child back after class hours up to 15 minutes without prior notice.\n                                        If a child is given detention for more than 15 minutes, then a letter\n                                        will be sent home with the child, to notify the parent/guardian in advance.\n                                        Failure to attend the detention will lead to the child being suspended.\n                                    "
+                              "\n                                            The Madrasah has a detention policy which applies to all children,\n                                            irrespective of age. Any Teacher or the Head Teacher can give detention\n                                            to any child if they consider it necessary and has the right to keep\n                                            the child back after class hours up to 15 minutes without prior notice.\n                                            If a child is given detention for more than 15 minutes, then a letter\n                                            will be sent home with the child, to notify the parent/guardian in advance.\n                                            Failure to attend the detention will lead to the child being suspended.\n                                        "
                             )
                           ]),
                           _vm._v(" "),
                           _c("li", [
                             _vm._v(
-                              "\n                                        Parents/Guardians should notify the Head teacher prior to admission of any\n                                        health problems that their child has. Also keep the Madrasah informed of\n                                        the child’s health.\n                                    "
+                              "\n                                            Parents/Guardians should notify the Head teacher prior to admission of any\n                                            health problems that their child has. Also keep the Madrasah informed of\n                                            the child’s health.\n                                        "
                             )
                           ]),
                           _vm._v(" "),
                           _c("li", [
                             _vm._v(
-                              "\n                                        Parents/Guardians will not interfere with regards to the running and\n                                        arrangements of the Madrasah.\n                                    "
+                              "\n                                            Parents/Guardians will not interfere with regards to the running and\n                                            arrangements of the Madrasah.\n                                        "
                             )
                           ]),
                           _vm._v(" "),
                           _c("li", [
                             _vm._v(
-                              "\n                                        Children are not allowed to attend the Madrasah with mobile phones;\n                                        hand held game consoles, iPods, iPads, mp3s, Penknives, sweets,\n                                        chewing gum etc. Any child found to be in possession of any of these\n                                        items will have them confiscated immediately and may not be returned\n                                        to the child.\n                                    "
+                              "\n                                            Children are not allowed to attend the Madrasah with mobile phones;\n                                            hand held game consoles, iPods, iPads, mp3s, Penknives, sweets,\n                                            chewing gum etc. Any child found to be in possession of any of these\n                                            items will have them confiscated immediately and may not be returned\n                                            to the child.\n                                        "
                             )
                           ]),
                           _vm._v(" "),
                           _c("li", [
                             _vm._v(
-                              "\n                                        All "
+                              "\n                                            All "
                             ),
                             _c("strong", [_vm._v("females")]),
                             _vm._v(
-                              " coming to drop and /or collect the child\n                                        must cover their heads (in accordance with Islamic ethics)\n                                    "
+                              " coming to drop and /or collect the child\n                                            must cover their heads (in accordance with Islamic ethics)\n                                        "
                             )
                           ]),
                           _vm._v(" "),
                           _c("li", [
                             _vm._v(
-                              "\n                                        Any deliberate damage to the property of the masjid will have to be\n                                        reimbursed by the parents/guardians.\n                                    "
+                              "\n                                            Any deliberate damage to the property of the masjid will have to be\n                                            reimbursed by the parents/guardians.\n                                        "
                             )
                           ]),
                           _vm._v(" "),
                           _c("li", [
                             _vm._v(
-                              "\n                                        Safety of the children outside the lesson hours in masjid premises\n                                        is the responsibility of the parents/guardians.\n                                    "
+                              "\n                                            Safety of the children outside the lesson hours in masjid premises\n                                            is the responsibility of the parents/guardians.\n                                        "
                             )
                           ]),
                           _vm._v(" "),
                           _c("li", [
                             _vm._v(
-                              "\n                                        Students are not allowed to take part in any activity during the\n                                        class hours. E.g.  clubs, trips, family outings etc.\n                                    "
+                              "\n                                            Students are not allowed to take part in any activity during the\n                                            class hours. E.g.  clubs, trips, family outings etc.\n                                        "
                             )
                           ]),
                           _vm._v(" "),
                           _c("li", [
                             _vm._v(
-                              "\n                                        All the above Rules and Regulations and any further rules decided by\n                                        the Head teacher or committee will have to be followed.\n                                    "
+                              "\n                                            All the above Rules and Regulations and any further rules decided by\n                                            the Head teacher or committee will have to be followed.\n                                        "
                             )
                           ])
                         ]),
                         _vm._v(" "),
                         _c("p", [
                           _vm._v(
-                            "\n                                    Please note that the above terms and subject to change\n                                "
+                            "\n                                        Please note that the above terms and subject to change\n                                    "
                           )
                         ]),
                         _vm._v(" "),
@@ -61215,7 +61324,7 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                                I understand & accept the terms set out in this section\n                                                of the application form.\n                                            "
+                                    "\n                                                    I understand & accept the terms set out in this section\n                                                    of the application form.\n                                                "
                                   )
                                 ]
                               ),
@@ -61268,7 +61377,7 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                                                I do not accept the terms set out in this section of the\n                                                application form.\n                                            "
+                                    "\n                                                    I do not accept the terms set out in this section of the\n                                                    application form.\n                                                "
                                   )
                                 ]
                               ),

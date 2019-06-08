@@ -24,7 +24,7 @@ class CreateAdmissionsTable extends Migration
             $table->dateTime('date_received')->nullable();
             $table->boolean('birth_certificate')->nullable();
             $table->boolean('passport')->nullable();
-            $table->dateTime('enrolment_date')->nullable();
+            $table->dateTime('enrolment_date')->nullable()->default(null);
             $table->string('application_number')->nullable();
             $table->timestamps();
         });

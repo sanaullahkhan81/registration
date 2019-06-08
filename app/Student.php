@@ -48,4 +48,8 @@ class Student extends Model
     {
         return $this->hasOne(Ethnic::class,'id','ethnic_origin_id');
     }
+
+    public function former_course(){
+        return $this->hasMany(FormerCourse::class);
+    }
 }

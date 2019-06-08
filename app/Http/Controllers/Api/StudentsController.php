@@ -57,10 +57,10 @@ class StudentsController extends Controller
             'language','country',
             'nationality','ethnic',
             'guardians', 'courses',
-            'health_data'
-        ])
-                          ->whereId($student_id)
-                          ->first();
+            'health_data','emergency_contacts',
+            'admission','former_course'
+        ])->whereId($student_id)
+              ->first();
         return response($student,200);
     }
 
@@ -73,7 +73,7 @@ class StudentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd(2);
     }
 
     /**

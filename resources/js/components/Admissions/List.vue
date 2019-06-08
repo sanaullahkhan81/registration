@@ -50,7 +50,6 @@
                     { field: 'application_number', title: 'App No'},
                     { field: 'student.forename', title: 'Student Name'},
                     { field: 'student.surname', title: 'Student Lastname'},
-                    { field: 'student.enrolment_date', title: 'enrolment_date',  filter:'date', cell: this.enrolment_date},
                     { field: 'id', title: 'Actions', cell: this.cellFunction, width:'100px',filterable:false }
                 ],
             };
@@ -123,9 +122,6 @@
                         }
                     })
                 ]);
-            },
-            enrolment_date: function (h, tdElement , props, clickHandler ) {
-                return h('td', props.dataItem.enrolment_date.substring(0,10));
             },
 		}
     }

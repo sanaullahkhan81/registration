@@ -24,7 +24,7 @@ class StudentsTableSeeder extends Seeder
         HealthData::truncate();
         FormerCourse::truncate();
 
-        factory(App\Student::class, 200)->create()->each(function ($student){
+        factory(App\Student::class, 10)->create()->each(function ($student){
 
             $course = App\Course::inRandomOrder()->first('id');
             $student->courses()->attach($course);

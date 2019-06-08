@@ -11,7 +11,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="surname">Surname:</label>
-                                        <input id="surname" type="text" class="form-control" v-model="admission.student.surname" required>
+                                        <input id="surname" type="text" class="form-control"
+                                               v-model="admission.student.surname" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="dob">Date of Birth:</label>
@@ -21,7 +22,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="gender">Gender:</label>
-                                        <select id="gender" type="text" class="form-control" v-model="admission.student.gender">
+                                        <select id="gender" type="text" class="form-control"
+                                                v-model="admission.student.gender">
                                             <option value="">Select</option>
                                             <option value="male">Male</option>
                                             <option value="female">Female</option>
@@ -41,7 +43,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="forename">Forename (s):</label>
-                                        <input id="forename" type="text" class="form-control" v-model="admission.student.forename">
+                                        <input id="forename" type="text" class="form-control"
+                                               v-model="admission.student.forename">
                                     </div>
                                     <div class="form-group">
                                         <label for="cob">Country of Birth:</label>
@@ -78,32 +81,37 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="phone">Telephone:</label>
-                                        <input id="phone" type="text" class="form-control" v-model="admission.student.telephone">
+                                        <input id="phone" type="text" class="form-control"
+                                               v-model="admission.student.telephone">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="mobile">Mobile:</label>
-                                        <input id="mobile" type="text" class="form-control" v-model="admission.student.mobile">
+                                        <input id="mobile" type="text" class="form-control"
+                                               v-model="admission.student.mobile">
                                     </div>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label for="address">Address:</label>
-                                        <textarea id="address" class="form-control" v-model="admission.student.address">
+                                        <textarea id="address" class="form-control"
+                                                  v-model="admission.student.address">
                                         </textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="postcode">Postcode:</label>
-                                        <input id="postcode" type="text" class="form-control" v-model="admission.student.post_code">
+                                        <input id="postcode" type="text" class="form-control"
+                                               v-model="admission.student.post_code">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="relation">Relationship to child:</label>
-                                        <input id="relation" type="text" class="form-control" v-model="admission.student.relationship_to_child">
+                                        <input id="relation" type="text" class="form-control"
+                                               v-model="admission.student.relationship_to_child">
                                     </div>
                                 </div>
                                 <div class="col-md-12 text-center">
@@ -111,9 +119,12 @@
                                 </div>
                                 <div class="col-md-12">
                                     <ul class="list-group">
-                                        <li class="list-group-item" v-for="course in courses">
-                                            <label>{{course.course_name}}</label>
-                                            <input type="checkbox" @change="addToList(course.id)">
+                                        <li class="list-group-item" v-for="(course,index) in courses">
+                                            <label :for="course.id">{{course.course_name}}</label>
+											<input type="checkbox" v-model="admission.courses"
+                                                   :value="course.id"
+                                                   :id="course.id"
+                                                   :checked="isChecked(index)" />
                                         </li>
                                     </ul>
                                 </div>
@@ -553,7 +564,7 @@
                                         <div class="col-sm-6">
                                             <datepicker id="enrolment_date" class="form-control"
                                                     v-model="admission.offer_of_acceptance.office_use.enrolment_date"
-                                            />
+                                            >
                                             </datepicker>
                                         </div>
                                     </div>
@@ -656,7 +667,25 @@
                 ethnics:[],
                 languages:[],
                 nationalities:[],
-                errors: []
+                errors: [],
+                rules: {
+                    user: [{
+                        required: true,
+                        message: 'Please input Activity name',
+                        trigger: 'blur'
+                    }, {
+                        min: 3,
+                        max: 5,
+                        message: 'Length should be 3 to 5',
+                        trigger: 'blur'
+                    }],
+                    region: [{
+                        required: true,
+                        message: 'Please select Activity zone',
+                        trigger: 'change'
+                    }],
+                }
+
             }
         },
 
@@ -671,15 +700,6 @@
             this.getLanguages();
             this.getNationalities();
         },
-        rules: {
-
-
-        surname: [{
-            required: true,
-            message: 'Please input Surname name',
-            trigger: 'blur'
-        }],
-    },
         methods:{
             beforeTabSwitch(){
                 // Adding fields here for error checking
@@ -689,11 +709,7 @@
               return true;
             },
             createForm(){ // when form is not new
-                //Do api calls
                 let self =this;
-                // Get data and assign
-                // api call to /api/students/this.student_id
-                // use this.student_id
                 axios.get('/api/students/'+this.student_id)
                     .then(function (response) {
                         self.admission.student = response.data;
@@ -702,7 +718,43 @@
                         self.admission.student.nationality = response.data.nationality_id;
                         self.admission.student.first_language = response.data.language_id;
                         self.admission.health_data = response.data.health_data;
-                        console.log(response)
+                        self.admission.guardians = response.data.guardians;
+                        if (response.data.emergency_contacts && response.data.emergency_contacts.length) {
+                            self.admission.emergency_contacts = response.data.emergency_contacts;
+                        }
+                        if (response.data.admission && Object.keys(response.data.admission).length) {
+                            console.log(response.data.admission);
+                            let key = self.admission.offer_of_acceptance;
+                            let source = response.data.admission;
+                            key.other_children_at_institute = source.other_children_at_institute;
+                            if(source.accept_terms_conditions === 'true'){
+                                key.accept_terms = 1;
+                            }else{
+                                key.accept_terms = 0;
+                            }
+
+
+                            // self.admission.offer_of_acceptance = response.data.admission;
+                            if(typeof response.data.admission.office_use !== "undefined"){
+                                alert('2');
+                                self.admission.offer_of_acceptance.office_use = [{
+
+                                        date_received:'',
+                                        passport:'',
+                                        birth_certificate:'',
+                                        enrolment_date: '',
+                                        application_number:''
+
+                                }]
+                            }
+
+                        }
+                        self.admission.additional_education =  response.data.former_course[0];
+                        // self.admission.courses = response.data.courses;
+                        response.data.courses.forEach(function(course) {
+                            self.addToList(course.id);
+                        });
+
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -757,13 +809,19 @@
                     });
             },
             addToList(course){
+                //console.log(course)
                 var index = this.admission.courses.indexOf(course);
+                //console.log(index);
                 if (index === -1) {
                     this.admission.courses.push(course);
                 } else {
                     this.admission.courses.splice(index, 1);
                 }
-                console.log(this.admission.courses)
+                // console.log(this.admission.courses)
+            },
+            isChecked(index){
+                return this.admission.courses.id === this.courses[index].id
+
             },
             serious_illness_update(){
                 if(this.admission.health_data.serious_illness_description.length > 0){
@@ -816,20 +874,36 @@
             },
             saveForm(){
                 let self = this;
-                console.log(self.admission)
                 //const data = new URLSearchParams();
                 //data.append('admission', this.admission);
+
+                if(typeof this.admission_id !== "undefined"){
+                    var type = "PUT";
+                    var url = '/api/admissions/' + this.admission_id;
+                }else{
+                    var type = "POST";
+                    var url = 'api/admissions';
+                }
                 axios({
-                    method: 'post',
-                    url: 'api/admissions',
+                    method: type,
+                    url: url,
                     headers: { Authorization: 'Bearer ' + this.api_token },
                     data: self.admission
                 }).then( (response)  =>{
-                    //
+                    console.log(response);
+                    //window.location = '/admissions';
                 })
                 .catch(error => {
                     console.log(error.response)
                 });
+            },
+            validateFirstStep() {
+                return new Promise((resolve, reject) => {
+                    this.$refs.ruleForm.validate((valid) => {
+                        resolve(valid);
+                    });
+                })
+
             }
         }
     }

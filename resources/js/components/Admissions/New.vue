@@ -699,6 +699,7 @@
             this.getEthnic();
             this.getLanguages();
             this.getNationalities();
+
         },
         methods:{
             beforeTabSwitch(){

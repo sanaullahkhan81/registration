@@ -53,6 +53,7 @@ class StudentsController extends Controller
      */
     public function show($student_id)
     {
+        $x =2;
         $student = Student::with([
             'language','country',
             'nationality','ethnic',
@@ -61,6 +62,7 @@ class StudentsController extends Controller
             'admission','former_course'
         ])->whereId($student_id)
               ->first();
+        $y=$student;
         return response($student,200);
     }
 

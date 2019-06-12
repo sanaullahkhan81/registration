@@ -22121,8 +22121,8 @@ __webpack_require__.r(__webpack_exports__);
         }],
         additional_education: {
           madrasa_name: '',
-          teacher: '',
-          number: '',
+          teacher_name: '',
+          teacher_number: '',
           books: [{
             book_name: '',
             qaidah: '',
@@ -22215,8 +22215,25 @@ __webpack_require__.r(__webpack_exports__);
             key.accept_terms = 1;
           } else {
             key.accept_terms = 0;
-          } // self.admission.offer_of_acceptance = response.data.admission;
+          }
 
+          key.office_use.application_number = source.application_number; // key.office_use.birth_certificate = source.birth_certificate;
+
+          if (source.birth_certificate === "1") {
+            key.office_use.birth_certificate = true;
+          } else {
+            key.office_use.birth_certificate = false;
+          }
+
+          key.office_use.date_received = source.date_received; // key.office_use.passport = source.passport;
+
+          if (source.passport === "1") {
+            key.office_use.passport = true;
+          } else {
+            key.office_use.passport = false;
+          }
+
+          key.office_use.enrolment_date = source.enrolment_date; // self.admission.offer_of_acceptance = response.data.admission;
 
           if (typeof response.data.admission.office_use !== "undefined") {
             alert('2');
@@ -60451,12 +60468,12 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: row.contact_number,
-                                      expression: "row.contact_number"
+                                      value: row.telephone,
+                                      expression: "row.telephone"
                                     }
                                   ],
                                   staticClass: "form-control",
-                                  domProps: { value: row.contact_number },
+                                  domProps: { value: row.telephone },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
@@ -60464,7 +60481,7 @@ var render = function() {
                                       }
                                       _vm.$set(
                                         row,
-                                        "contact_number",
+                                        "telephone",
                                         $event.target.value
                                       )
                                     }
@@ -60480,12 +60497,12 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: row.mobile_number,
-                                      expression: "row.mobile_number"
+                                      value: row.mobile,
+                                      expression: "row.mobile"
                                     }
                                   ],
                                   staticClass: "form-control",
-                                  domProps: { value: row.mobile_number },
+                                  domProps: { value: row.mobile },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
@@ -60493,7 +60510,7 @@ var render = function() {
                                       }
                                       _vm.$set(
                                         row,
-                                        "mobile_number",
+                                        "mobile",
                                         $event.target.value
                                       )
                                     }
@@ -60734,14 +60751,16 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.admission.additional_education.teacher,
-                            expression: "admission.additional_education.teacher"
+                            value:
+                              _vm.admission.additional_education.teacher_name,
+                            expression:
+                              "admission.additional_education.teacher_name"
                           }
                         ],
                         staticClass: "form-control",
                         attrs: { id: "school_teacher", type: "text" },
                         domProps: {
-                          value: _vm.admission.additional_education.teacher
+                          value: _vm.admission.additional_education.teacher_name
                         },
                         on: {
                           input: function($event) {
@@ -60750,7 +60769,7 @@ var render = function() {
                             }
                             _vm.$set(
                               _vm.admission.additional_education,
-                              "teacher",
+                              "teacher_name",
                               $event.target.value
                             )
                           }
@@ -60770,14 +60789,17 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.admission.additional_education.number,
-                            expression: "admission.additional_education.number"
+                            value:
+                              _vm.admission.additional_education.teacher_number,
+                            expression:
+                              "admission.additional_education.teacher_number"
                           }
                         ],
                         staticClass: "form-control",
                         attrs: { id: "teacher_number", type: "text" },
                         domProps: {
-                          value: _vm.admission.additional_education.number
+                          value:
+                            _vm.admission.additional_education.teacher_number
                         },
                         on: {
                           input: function($event) {
@@ -60786,7 +60808,7 @@ var render = function() {
                             }
                             _vm.$set(
                               _vm.admission.additional_education,
-                              "number",
+                              "teacher_number",
                               $event.target.value
                             )
                           }

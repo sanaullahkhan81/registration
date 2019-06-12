@@ -94,8 +94,8 @@ class AdmissionsController extends Controller
                                 'occupation' => $guardian['occupation'],
                                 'address' => $guardian['address'],
                                 'post_code' => $guardian['post_code'],
-                                'telephone' => $guardian['contact_number'],
-                                'mobile' => $guardian['mobile_number'],
+                                'telephone' => $guardian['telephone'],
+                                'mobile' => $guardian['mobile'],
                             ]);
 
                 StudentGuardian::create([
@@ -119,8 +119,8 @@ class AdmissionsController extends Controller
             FormerCourse::create([
                 'student_id' => $student->id,
                 'madrasa_name' => $request->additional_education['madrasa_name'],
-                'teacher_name' => $request->additional_education['teacher'],
-                'teacher_number' => $request->additional_education['number'],
+                'teacher_name' => $request->additional_education['teacher_name'],
+                'teacher_number' => $request->additional_education['teacher_number'],
                 'books' => $request->additional_education['books'],
                 'leaving_reason' => $request->additional_education['leaving_reason'],
                 'former_education_details' => $request->additional_education['former_education_details'],
@@ -238,8 +238,8 @@ class AdmissionsController extends Controller
                         'occupation' => $guardian['occupation'],
                         'address' => $guardian['address'],
                         'post_code' => $guardian['post_code'],
-                        'telephone' => $guardian['contact_number'],
-                        'mobile' => $guardian['mobile_number'],
+                        'telephone' => $guardian['telephone'],
+                        'mobile' => $guardian['mobile'],
                     ]);
 
                     StudentGuardian::create([
@@ -300,10 +300,10 @@ class AdmissionsController extends Controller
             }
         }
         if($request->offer_of_acceptance){
-            $old_date = $request->offer_of_acceptance['accept_terms'];              // returns Saturday, January 30 10 02:06:34
-            $old_date_timestamp = strtotime($old_date);
-            $date_received = date('Y-m-d H:i:s', $old_date_timestamp);
-
+            if($request->offer_of_acceptance['office_use']['date_received']) {
+                $date_received = date('Y-m-d H:i:s',
+                    strtotime($request->offer_of_acceptance['office_use']['date_received']));
+            }
             $old_date =  $request->offer_of_acceptance['office_use']['enrolment_date'];
             if(!is_null($old_date)){// returns Saturday, January 30 10 02:06:34
                 $old_date_timestamp = strtotime($old_date);

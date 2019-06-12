@@ -217,9 +217,9 @@
                                     </tr>
                                     <tr>
                                         <td>Contact Number</td>
-                                        <td><input class="form-control" v-model="row.contact_number"></td>
+                                        <td><input class="form-control" v-model="row.telephone"></td>
                                         <td>Mobile Number</td>
-                                        <td><input class="form-control" v-model="row.mobile_number"></td>
+                                        <td><input class="form-control" v-model="row.mobile"></td>
                                     </tr>
                                     <tr>
                                         <td colspan="4">
@@ -277,14 +277,14 @@
                                     <div class="form-group">
                                         <label for="school_teacher">Teachers Name:</label>
                                         <input id="school_teacher" type="text" class="form-control"
-                                               v-model="admission.additional_education.teacher">
+                                               v-model="admission.additional_education.teacher_name">
                                     </div>
                                 </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="teacher_number">Teachers Number:</label>
                                     <input id="teacher_number" type="text" class="form-control"
-                                           v-model="admission.additional_education.number">
+                                           v-model="admission.additional_education.teacher_number">
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -643,8 +643,8 @@
                     ],
                     additional_education:{
                         madrasa_name: '',
-                        teacher: '',
-                        number: '',
+                        teacher_name: '',
+                        teacher_number: '',
                         books:[{book_name: '', qaidah: '', quran: '' }],
                         leaving_reason: '',
                         former_education_details: ''
@@ -732,6 +732,21 @@
                             }else{
                                 key.accept_terms = 0;
                             }
+                            key.office_use.application_number = source.application_number;
+                            // key.office_use.birth_certificate = source.birth_certificate;
+                            if(source.birth_certificate === "1"){
+                                key.office_use.birth_certificate = true;
+                            }else{
+                                key.office_use.birth_certificate = false;
+                            }
+                            key.office_use.date_received = source.date_received;
+                            // key.office_use.passport = source.passport;
+                            if(source.passport === "1"){
+                                key.office_use.passport = true;
+                            }else{
+                                key.office_use.passport = false;
+                            }
+                            key.office_use.enrolment_date = source.enrolment_date;
 
 
                             // self.admission.offer_of_acceptance = response.data.admission;

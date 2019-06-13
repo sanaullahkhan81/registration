@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="3736ebda-3a72-4212-b2bf-c406151d2360" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Admissions/New.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Admissions/New.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,8 +62,23 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/js/components/Admissions/New.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
-              <caret line="761" column="61" lean-forward="true" selection-start-line="761" selection-start-column="61" selection-end-line="761" selection-end-column="61" />
+            <state relative-caret-position="221">
+              <caret line="202" column="38" selection-start-line="202" selection-start-column="38" selection-end-line="202" selection-end-column="38" />
+              <folding>
+                <element signature="n#tab-content#1;n#form-wizard#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#tab-content#2;n#form-wizard#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" />
+                <element signature="n#tab-content#3;n#form-wizard#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" />
+                <element signature="e#40603#40645#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="13" column="14" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -139,7 +158,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Country of Birth:</find>
       <find>Madrasa Name:</find>
       <find>YES</find>
       <find>date_received</find>
@@ -169,6 +187,7 @@
       <find>console.log(response);</find>
       <find>checkbox</find>
       <find>passport</find>
+      <find>error</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Documents and Settings</dir>
@@ -200,6 +219,7 @@
         <option value="$PROJECT_DIR$/resources/js/components/Admissions/Show.vue" />
         <option value="$PROJECT_DIR$/resources/views/layouts/app.blade.php" />
         <option value="$PROJECT_DIR$/resources/js/components/Admissions/List.vue" />
+        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/resources/js/components/Admissions/New.vue" />
       </list>
     </option>
@@ -418,19 +438,19 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49589000" />
+    <option name="totallyTimeSpent" value="51725000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.48895434" visible="true" weight="0.18869936" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48776978" visible="true" weight="0.18869936" />
       <window_info id="Structure" order="1" sideWeight="0.51104563" side_tool="true" weight="0.18869936" />
-      <window_info id="npm" order="2" sideWeight="0.51104563" side_tool="true" weight="0.18869936" />
+      <window_info id="npm" order="2" sideWeight="0.5122302" side_tool="true" visible="true" weight="0.18869936" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.24702059" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.24702059" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -439,7 +459,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.26435536" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.35211268" />
       <window_info anchor="bottom" id="Database Console" order="12" weight="0.32936078" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -504,9 +524,6 @@
           <caret selection-end-line="23" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/composer.json">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/.env.example">
       <provider selected="true" editor-type-id="text-editor" />
@@ -676,13 +693,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="28" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="das://8f2248dd-d069-40c0-b62c-6383bb18da7c/schema/registrations/table/guardians">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state projectRestartId="f3322259-c875-494e-be56-f4d83955880a">
@@ -773,13 +783,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/Admissions/New.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="761" column="61" lean-forward="true" selection-start-line="761" selection-start-column="61" selection-end-line="761" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/components/newRegistration.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="680">
@@ -832,6 +835,29 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1887">
           <caret line="113" column="20" selection-start-line="113" selection-start-column="20" selection-end-line="113" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/composer.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="14" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/Admissions/New.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="202" column="38" selection-start-line="202" selection-start-column="38" selection-end-line="202" selection-end-column="38" />
+          <folding>
+            <element signature="n#tab-content#1;n#form-wizard#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#tab-content#2;n#form-wizard#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="n#tab-content#3;n#form-wizard#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="e#40603#40645#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -34,12 +34,13 @@
                 axios({
                     method: 'get',
                     url: page_url,
-                    headers: {
+					headers: {
                         Authorization: 'Bearer ' + this.api_token
                     }
                 }).then( (response)  =>{
 					console.log(response);
 					self.admission = response.data;
+
                 })
                     .catch(function (error) {
                         console.log(error);

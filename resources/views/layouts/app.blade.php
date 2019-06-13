@@ -28,15 +28,15 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('admissions') ? 'active' : '' }}"
-                               href="{{ url('admissions') }}"> Admissions</a>
+                               href="{{ url('admissions') }}">Pending Admissions</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('studentRegister') ? 'active' : '' }}"
-                               href="{{ url('studentRegister') }}">Registrations</a>
+                               href="{{ url('studentRegister') }}">New Registration</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('students') ? 'active' : '' }}"
-                               href="{{ url('students') }}">Students</a>
+                               href="{{ url('students') }}">Active Students</a>
                         </li>
                     </ul>
                 </div>

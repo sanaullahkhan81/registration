@@ -78,6 +78,7 @@
                 }).then( (response)  =>{
                     this.items = response.data;
                     this.total = response.total;
+
                 })
                     .catch(function (error) {
                         console.log(error);

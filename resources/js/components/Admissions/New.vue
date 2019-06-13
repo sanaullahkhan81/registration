@@ -735,14 +735,14 @@
                             }
                             key.office_use.application_number = source.application_number;
                             // key.office_use.birth_certificate = source.birth_certificate;
-                            if(source.birth_certificate === "1"){
+                            if(source.birth_certificate == 1){
                                 key.office_use.birth_certificate = true;
                             }else{
                                 key.office_use.birth_certificate = false;
                             }
                             key.office_use.date_received = source.date_received;
                             // key.office_use.passport = source.passport;
-                            if(source.passport === "1"){
+                            if(source.passport == 1){
                                 key.office_use.passport = true;
                             }else{
                                 key.office_use.passport = false;
@@ -907,7 +907,7 @@
                     data: self.admission
                 }).then( (response)  =>{
                     console.log(response);
-                    //window.location = '/admissions';
+                    window.location = '/admissions';
                 })
                 .catch(error => {
                     console.log(error.response)

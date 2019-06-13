@@ -5,201 +5,208 @@
             <div class="col-sm-12" style="background-color:white;">
                 <form-wizard title="Masjid Al-Jannah Community Islamic School"
                              subtitle="Admission Form" @on-complete="saveForm" >
-                    <tab-content title="Section 1- Child’s Details" :before-change="beforeTabSwitch">
+                    <tab-content title="Section 1- Child’s Details" :before-change="validateFirstStep">
                         <div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="surname">Surname:</label>
-                                        <input id="surname" type="text" class="form-control"
-                                               v-model="admission.student.surname" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="dob">Date of Birth:</label>
-                                        <datepicker id="dob" class="form-control"
-                                                    v-model="admission.student.date_of_birth">
-                                        </datepicker>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="gender">Gender:</label>
-                                        <select id="gender" type="text" class="form-control"
-                                                v-model="admission.student.gender">
-                                            <option value="">Select</option>
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="first-lang">Mother tongue/First Language:</label>
-                                        <select id="first-lang" class="form-control"
-                                                v-model="admission.student.first_language">
-                                                <option disabled value="">Please select one</option>
-                                                <option v-for="language in languages" v-bind:value="language.id">
-                                                    {{ language.language }}
-                                                </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="forename">Forename (s):</label>
-                                        <input id="forename" type="text" class="form-control"
-                                               v-model="admission.student.forename">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="cob">Country of Birth:</label>
-                                        <select id="cob" class="form-control"
-                                                v-model="admission.student.country_of_birth">
-                                            <option disabled value="">Please select one</option>
-                                            <option v-for="country in countries" v-bind:value="country.id">
-                                                {{ country.country_name }}
-                                            </option>
-                                        </select>
+                            <el-form :inline="true" :model="admission.student" class="demo-form-inline" :rules="step1_rules" ref="ruleForm">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
 
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="eo">Ethnic Origin:</label>
-                                        <select id="eo" class="form-control" v-model="admission.student.ethnic_origin">
-                                                <option disabled value="">Please select one</option>
-                                                <option v-for="ethnic in ethnics" v-bind:value="ethnic.id">
-                                                    {{ ethnic.ethnic_origin_name }}
-                                                </option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="nationality">Nationality:</label>
-                                        <select id="nationality" class="form-control"
-                                                v-model="admission.student.nationality">
-                                                <option disabled value="">Please select one</option>
-                                                <option v-for="nationality in nationalities"
-                                                        v-bind:value="nationality.id">
-                                                    {{ nationality.nationality_name }}
-                                                </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="phone">Telephone:</label>
-                                        <input id="phone" type="text" class="form-control"
-                                               v-model="admission.student.telephone">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="mobile">Mobile:</label>
-                                        <input id="mobile" type="text" class="form-control"
-                                               v-model="admission.student.mobile">
-                                    </div>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="form-group">
-                                        <label for="address">Address:</label>
-                                        <textarea id="address" class="form-control"
-                                                  v-model="admission.student.address">
-                                        </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="postcode">Postcode:</label>
-                                        <input id="postcode" type="text" class="form-control"
-                                               v-model="admission.student.post_code">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="relation">Relationship to child:</label>
-                                        <input id="relation" type="text" class="form-control"
-                                               v-model="admission.student.relationship_to_child">
-                                    </div>
-                                </div>
-                                <div class="col-md-12 text-center">
-                                    <h3>Courses</h3>
-                                </div>
-                                <div class="col-md-12">
-                                    <ul class="list-group">
-                                        <li class="list-group-item" v-for="(course,index) in courses">
-                                            <label :for="course.id">{{course.course_name}}</label>
-											<input type="checkbox" v-model="admission.courses"
-                                                   :value="course.id"
-                                                   :id="course.id"
-                                                   :checked="isChecked(index)" />
-                                        </li>
-                                    </ul>
-                                </div>
+                                                <el-form-item label="Surname" prop="surname">
+                                                    <el-input v-model="admission.student.surname"></el-input>
+                                                </el-form-item>
 
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 text-center p-top">
-                                    <h3>Contact</h3>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="dob">Date of Birth:</label>
+                                            <datepicker id="dob" class="form-control"
+                                                        v-model="admission.student.date_of_birth">
+                                            </datepicker>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="gender">Gender:</label>
+                                            <select id="gender" type="text" class="form-control"
+                                                    v-model="admission.student.gender">
+                                                <option value="">Select</option>
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="first-lang">Mother tongue/First Language:</label>
+                                            <select id="first-lang" class="form-control"
+                                                    v-model="admission.student.first_language">
+                                                    <option disabled value="">Please select one</option>
+                                                    <option v-for="language in languages" v-bind:value="language.id">
+                                                        {{ language.language }}
+                                                    </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="forename">Forename (s):</label>
+                                            <input id="forename" type="text" class="form-control"
+                                                   v-model="admission.student.forename">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cob">Country of Birth:</label>
+                                            <select id="cob" class="form-control"
+                                                    v-model="admission.student.country_of_birth">
+                                                <option disabled value="">Please select one</option>
+                                                <option v-for="country in countries" v-bind:value="country.id">
+                                                    {{ country.country_name }}
+                                                </option>
+                                            </select>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="eo">Ethnic Origin:</label>
+                                            <select id="eo" class="form-control" v-model="admission.student.ethnic_origin">
+                                                    <option disabled value="">Please select one</option>
+                                                    <option v-for="ethnic in ethnics" v-bind:value="ethnic.id">
+                                                        {{ ethnic.ethnic_origin_name }}
+                                                    </option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nationality">Nationality:</label>
+                                            <select id="nationality" class="form-control"
+                                                    v-model="admission.student.nationality">
+                                                    <option disabled value="">Please select one</option>
+                                                    <option v-for="nationality in nationalities"
+                                                            v-bind:value="nationality.id">
+                                                        {{ nationality.nationality_name }}
+                                                    </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="phone">Telephone:</label>
+                                            <input id="phone" type="text" class="form-control"
+                                                   v-model="admission.student.telephone">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="mobile">Mobile:</label>
+                                            <input id="mobile" type="text" class="form-control"
+                                                   v-model="admission.student.mobile">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label for="address">Address:</label>
+                                            <textarea id="address" class="form-control"
+                                                      v-model="admission.student.address">
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="postcode">Postcode:</label>
+                                            <input id="postcode" type="text" class="form-control"
+                                                   v-model="admission.student.post_code">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="relation">Relationship to child:</label>
+                                            <input id="relation" type="text" class="form-control"
+                                                   v-model="admission.student.relationship_to_child">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <h3>Courses</h3>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <ul class="list-group">
+                                            <li class="list-group-item" v-for="(course,index) in courses">
+                                                <label :for="course.id">{{course.course_name}}</label>
+                                                <input type="checkbox" v-model="admission.courses"
+                                                       :value="course.id"
+                                                       :id="course.id"
+                                                       :checked="isChecked(index)" />
+                                            </li>
+                                        </ul>
+                                    </div>
+
                                 </div>
-                                <div class="col-md-12 text-center">
-                                    <table class="table-contact">
-                                        <tr>
-                                            <th>Ousman Annsary (Imam)</th>
-                                            <td>07443844312</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Shabbir Ahmad (Admin)</th>
-                                            <td>07982961448<br />01753315618</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 text-center p-top">
-                                    <h3>Child’s Health</h3>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="allergies_details">
-                                            Does your child suffer from any serious illness/allergies?
-                                            If so please give details:</label>
-                                        <textarea id="allergies_details" class="form-control"
-                                                  v-model="admission.health_data.serious_illness_description"
-                                                  @change="serious_illness_update">
-                                        </textarea>
+                                <div class="row">
+                                    <div class="col-md-12 text-center p-top">
+                                        <h3>Contact</h3>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <table class="table-contact">
+                                            <tr>
+                                                <th>Ousman Annsary (Imam)</th>
+                                                <td>07443844312</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Shabbir Ahmad (Admin)</th>
+                                                <td>07982961448<br />01753315618</td>
+                                            </tr>
+                                        </table>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="relevant_info">Any other relevant information:</label>
-                                        <textarea id="relevant_info" class="form-control"
-                                                  v-model="admission.health_data.serious_illness_relevant_info">
-                                        </textarea>
+                                <div class="row">
+                                    <div class="col-md-12 text-center p-top">
+                                        <h3>Child’s Health</h3>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="allergies_details">
+                                                Does your child suffer from any serious illness/allergies?
+                                                If so please give details:</label>
+                                            <textarea id="allergies_details" class="form-control"
+                                                      v-model="admission.health_data.serious_illness_description"
+                                                      @change="serious_illness_update">
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="relevant_info">Any other relevant information:</label>
+                                            <textarea id="relevant_info" class="form-control"
+                                                      v-model="admission.health_data.serious_illness_relevant_info">
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="name_of_surgery">Name of Surgery: </label>
+                                            <textarea id="name_of_surgery" class="form-control"
+                                                      v-model="admission.health_data.surgery_name">
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="name_of_doctor">Name of Doctor: </label>
+                                            <textarea id="name_of_doctor" class="form-control"
+                                                      v-model="admission.health_data.doctor_name">
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="surgery_address">Address of Surgery:  </label>
+                                            <textarea id="surgery_address" class="form-control"
+                                                      v-model="admission.health_data.surgery_address">
+                                            </textarea>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="name_of_surgery">Name of Surgery: </label>
-                                        <textarea id="name_of_surgery" class="form-control"
-                                                  v-model="admission.health_data.surgery_name">
-                                        </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="name_of_doctor">Name of Doctor: </label>
-                                        <textarea id="name_of_doctor" class="form-control"
-                                                  v-model="admission.health_data.doctor_name">
-                                        </textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="surgery_address">Address of Surgery:  </label>
-                                        <textarea id="surgery_address" class="form-control"
-                                                  v-model="admission.health_data.surgery_address">
-                                        </textarea>
-                                    </div>
-                                </div>
-                            </div>
+                            </el-form>
                         </div>
                     </tab-content>
                     <tab-content title="Section 2- Parents/Guardians Details">
+
                         <div class="row">
-                            <div class="col-md-12">
+                            <el-form :inline="true" :model="admission.guardians" class="demo-form-inline" :rules="guardianRules" ref="ruleForm">
+                                <div class="col-md-12">
                                 <table class="table"  v-for="(row, $index) in admission.guardians"
                                        v-bind:key='row.id'>
                                     Parent /  Guardinan : # {{$index+1}}
@@ -233,10 +240,12 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="col-md-12 text-center">
+                            </el-form>
+                                <div class="col-md-12 text-center">
                                 <h3>Emergency Contact Details</h3>
                             </div>
-                            <div class="col-md-12">
+                            <el-form :inline="true" :model="admission.emergency_contacts" class="demo-form-inline" :rules="emergencyRules" ref="ruleForm">
+                                <div class="col-md-12">
                                 <table class="table">
                                     <tr v-for="(row,$index) in admission.emergency_contacts">
                                         <th>({{$index+1}}) Name: </th>
@@ -254,6 +263,7 @@
                                     </tr>
                                 </table>
                             </div>
+                            </el-form>
                         </div>
 
                     </tab-content>
@@ -595,6 +605,8 @@
 
 <script>
     import Datepicker from 'vuejs-datepicker';
+    import Element from 'element-ui'
+    Vue.use(Element)
     export default {
         props:['api_token','admission_id','student_id'],
         components: {Datepicker},
@@ -668,8 +680,8 @@
                 languages:[],
                 nationalities:[],
                 errors: [],
-                rules: {
-                    user: [{
+                step1_rules: {
+                    surname: [{
                         required: true,
                         message: 'Please input Activity name',
                         trigger: 'blur'
@@ -678,12 +690,13 @@
                         max: 5,
                         message: 'Length should be 3 to 5',
                         trigger: 'blur'
-                    }],
-                    region: [{
-                        required: true,
-                        message: 'Please select Activity zone',
-                        trigger: 'change'
-                    }],
+                    }]
+                },
+                guardianRules:{
+                    // TODO: Fill rules
+                },
+                emergencyRules: {
+                    // TODO: Fill rules
                 }
 
             }
@@ -702,13 +715,6 @@
 
         },
         methods:{
-            beforeTabSwitch(){
-                // Adding fields here for error checking
-              if(this.admission.student.forename.length < 2){
-                  return false;
-              }
-              return true;
-            },
             createForm(){ // when form is not new
                 let self =this;
                 axios.get('/api/students/'+this.student_id)

@@ -37,6 +37,7 @@
         "@progress/kendo-vue-grid": "^0.3.3",
         "@progress/kendo-vue-intl": "^0.2.0",
         "@progress/kendo-vue-popup": "^0.3.3",
+        "element-ui": "^2.9.1",
         "vue-class-component": "^7.1.0",
         "vue-form-wizard": "^0.8.4",
         "vuejs-datepicker": "^1.5.4"

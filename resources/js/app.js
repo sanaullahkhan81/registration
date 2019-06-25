@@ -1,4 +1,5 @@
 import VueFormWizard from 'vue-form-wizard';
+import Vuelidate from 'vuelidate'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css';
 /**
  * First we will load all of this project's JavaScript dependencies which

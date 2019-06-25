@@ -5,29 +5,37 @@
             <div class="col-sm-12" style="background-color:white;">
                 <form-wizard title="Masjid Al-Jannah Community Islamic School"
                              subtitle="Admission Form" @on-complete="saveForm" >
-                    <tab-content title="Section 1- Child’s Details" :before-change="beforeTabSwitch">
+                    <tab-content title="Section 1- Child’s Details" :before-change="validateFirstStep">
                         <div>
+                            <el-form  :model="admission.student" class="" :rules="step1_rules" ref="ruleForm">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="surname">Surname:</label>
-                                        <input id="surname" type="text" class="form-control"
-                                               v-model="admission.student.surname" required>
+                                        <el-form-item label="Surname" prop="surname">
+                                            <el-input v-model="admission.student.surname"></el-input>
+
+                                        </el-form-item>
+
                                     </div>
                                     <div class="form-group">
                                         <label for="dob">Date of Birth:</label>
                                         <datepicker id="dob" class="form-control"
                                                     v-model="admission.student.date_of_birth">
                                         </datepicker>
+
+
+
                                     </div>
+
                                     <div class="form-group">
-                                        <label for="gender">Gender:</label>
+                                      <label for="gender">Gender:</label>
                                         <select id="gender" type="text" class="form-control"
                                                 v-model="admission.student.gender">
                                             <option value="">Select</option>
                                             <option value="male">Male</option>
                                             <option value="female">Female</option>
                                         </select>
+
                                     </div>
                                     <div class="form-group">
                                         <label for="first-lang">Mother tongue/First Language:</label>
@@ -42,9 +50,11 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="forename">Forename (s):</label>
-                                        <input id="forename" type="text" class="form-control"
-                                               v-model="admission.student.forename">
+                                        <el-form-item label="Forename" prop="forename">
+                                            <el-input v-model="admission.student.forename"></el-input>
+
+                                        </el-form-item>
+
                                     </div>
                                     <div class="form-group">
                                         <label for="cob">Country of Birth:</label>
@@ -80,6 +90,11 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
+
+                                        <el-form-item label="Telephone:" prop="phone">
+                                            <el-input v-model="admission.student.phone"></el-input>
+
+                                        </el-form-item>
                                         <label for="phone">Telephone:</label>
                                         <input id="phone" type="text" class="form-control"
                                                v-model="admission.student.telephone">
@@ -130,6 +145,7 @@
                                 </div>
 
                             </div>
+
                             <div class="row">
                                 <div class="col-md-12 text-center p-top">
                                     <h3>Contact</h3>
@@ -195,6 +211,7 @@
                                     </div>
                                 </div>
                             </div>
+                                </el-form>
                         </div>
                     </tab-content>
                     <tab-content title="Section 2- Parents/Guardians Details">
@@ -595,6 +612,8 @@
 
 <script>
     import Datepicker from 'vuejs-datepicker';
+    import Element from 'element-ui'
+    Vue.use(Element)
     export default {
         props:['api_token','admission_id','student_id'],
         components: {Datepicker},
@@ -668,23 +687,31 @@
                 languages:[],
                 nationalities:[],
                 errors: [],
-                rules: {
-                    user: [{
+                step1_rules: {
+
+                    surname: [{
                         required: true,
-                        message: 'Please input Activity name',
+                        message: 'Surname is Required',
                         trigger: 'blur'
                     }, {
                         min: 3,
                         max: 5,
                         message: 'Length should be 3 to 5',
-                        trigger: 'blur'
+                        trigger: 'blur',
+
                     }],
-                    region: [{
+                    forename:[{
                         required: true,
-                        message: 'Please select Activity zone',
-                        trigger: 'change'
+                        message: 'Forename is Required',
+                        trigger: 'blur'
+                    }, {
+                        min: 3,
+                        max: 5,
+                        message: 'Length should be 3 to 5',
+                        trigger: 'blur',
+
                     }],
-                }
+                },
 
             }
         },
@@ -936,4 +963,7 @@
         width: auto;
         box-shadow: none;
     }
+
+
+
 </style>

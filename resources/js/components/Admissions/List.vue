@@ -30,6 +30,34 @@
     import { Grid,GridNoRecords } from '@progress/kendo-vue-grid'
     Vue.component('grid-norecords', GridNoRecords);
     Vue.component('Grid', Grid);
+	Vue.component('sibling-presence-filter', {
+		template: `<div>
+                <select ref='select' :value='value' @change='change' class="table-filter">
+
+                    <option value="null" ></option>
+                    <option value="1" >Yes</option>
+                    <option value="0" >No</option>
+                </select>
+                <button v-if="this.value != ''" @click="reset">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+            </div>`,
+		props: {
+			grid: Grid,
+			field: String,
+			filterType: String,
+			value: [String, Number, Boolean, Date],
+			operator: null
+		},
+		methods: {
+			change (ev) {
+				this.$emit('change', { operator: 'eq', field: this.field, value: this.$refs.select.value, syntheticEvent: ev });
+			},
+			reset (ev) {
+				this.$emit('change', { operator: 'eq', field: '', value: '', syntheticEvent: ev });
+			}
+		}
+	});
     export default {
         name: "AdmissionsList",
         data(){
@@ -47,10 +75,14 @@
                     { field: 'created_at', dir: 'desc' }
                 ],
                 columns: [
-                    { field: 'application_number', title: 'App No'},
-                    { field: 'student.forename', title: 'Student Name'},
-                    { field: 'student.surname', title: 'Student Lastname'},
-                    { field: 'id', title: 'Actions', cell: this.cellFunction, width:'100px',filterable:false }
+                    { field: 'id', title: 'Application No'},
+					{ field: 'student_id', title: 'Student ID'},
+                    { field: 'student.forename', title: 'Student Full Name',cell:this.fullName},
+					{ field: 'student.gender', title: 'Gender'},
+					{ field: 'student.date_of_birth', title: 'Age', cell:this.age},
+					{ field: 'student.address', title: 'Address'},
+					{ field: 'other_children_at_institute', title: 'Siblings In Institute ', cell:this.siblingPreset, filterCell:"sibling-presence-filter"},
+                    { field: 'id', title: 'Actions', cell: this.ActionButton, width:'100px',filterable:false }
                 ],
             };
         },
@@ -58,6 +90,7 @@
             this.fetchList();
         },
 		methods:{
+        	// Get data from server
             fetchList(){
                 let page_url = '/api/admissions/';
                 if(this.page){
@@ -84,6 +117,7 @@
                         console.log(error);
                     });
             },
+			// When a pagination is clicked, manage the actions
             pageChangeHandler: function(event) {
                 console.log(event);
                 this.skip = event.page.skip;
@@ -93,16 +127,19 @@
                 this.fetchContacts();
 
             },
+			// When any colum header is clicked, manage the sort
             sortChangeHandler: function(e) {
                 this.sort = e.sort;
                 this.fetchList();
             },
+			// When a filter is used update the table
             filterChange: function(ev) {
                 console.log(ev)
                 this.filter = ev.filter;
                 this.fetchList();
             },
-            cellFunction: function (h, tdElement , props, clickHandler ) {
+			// Convert given data to a button
+			ActionButton: function (h, tdElement , props, clickHandler ) {
                 return h('td',  [
                     h('a', {
                         attrs: {
@@ -124,6 +161,58 @@
                     })
                 ]);
             },
+			// Convert first and last name into one cell
+			fullName: function (h, tdElement, props, clickHandler) {
+            	// console.log(props.dataItem)
+				return h('td',  [
+					h('span', {
+						attrs: {
+						},
+						domProps: {
+							innerHTML: props.dataItem.student.forename + ' ' + props.dataItem.student.surname
+						}
+					})
+				]);
+			},
+			// Convert date of birth to student age
+			age: function (h, tdElement, props, clickHandler) {
+				// console.log(props.dataItem)
+				let birthday = new Date(props.dataItem.student.date_of_birth);
+				console.log(birthday);
+				let ageDifMs = Date.now() - birthday.getTime();
+				let ageDate = new Date(ageDifMs);
+				let personAge =  Math.abs(ageDate.getUTCFullYear() - 1970);
+
+				return h('td',  [
+					h('span', {
+						attrs: {
+						},
+						domProps: {
+							innerHTML: personAge + ' Yrs'
+						}
+					})
+				]);
+			},
+			siblingPreset: function (h, tdElement, props, clickHandler) {
+				// console.log(props.dataItem)
+
+				var presence = 'No';
+				if(props.dataItem.other_children_at_institute == 1){
+					presence ='Yes';
+				}
+				return h('td',  [
+					h('span', {
+						attrs: {
+						},
+						domProps: {
+							innerHTML: presence
+						}
+					})
+				]);
+			},
+
+
+
 		}
     }
 </script>
@@ -133,4 +222,13 @@
 		margin-left: 1em;
 		margin-right: 0.2em;
 	}
+
+	.table-filter{
+		width:70%;
+	}
+
+	main{
+		min-width:90%;
+	}
+
 </style>

@@ -91,20 +91,20 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
 
-                                        <el-form-item label="Telephone:" prop="phone">
-                                            <el-input v-model="admission.student.phone"></el-input>
+                                        <el-form-item label="Telephone:" prop="telephone">
+                                            <el-input v-model="admission.student.telephone"></el-input>
 
                                         </el-form-item>
-                                        <label for="phone">Telephone:</label>
-                                        <input id="phone" type="text" class="form-control"
-                                               v-model="admission.student.telephone">
+
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="mobile">Mobile:</label>
-                                        <input id="mobile" type="text" class="form-control"
-                                               v-model="admission.student.mobile">
+                                        <el-form-item label="Mobile:" prop="mobile">
+                                            <el-input v-model="admission.student.mobile"></el-input>
+
+                                        </el-form-item>
+
                                     </div>
                                 </div>
                                 <div class="col-md-8">
@@ -113,20 +113,29 @@
                                         <textarea id="address" class="form-control"
                                                   v-model="admission.student.address">
                                         </textarea>
+
+
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="postcode">Postcode:</label>
-                                        <input id="postcode" type="text" class="form-control"
-                                               v-model="admission.student.post_code">
+
+                                        <el-form-item label="Postcode:" prop="post_code">
+                                            <el-input v-model="admission.student.post_code"></el-input>
+
+                                        </el-form-item>
+
+
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="relation">Relationship to child:</label>
-                                        <input id="relation" type="text" class="form-control"
-                                               v-model="admission.student.relationship_to_child">
+                                        <el-form-item label="Relationship to child:" prop="relationship_to_child">
+                                            <el-input v-model="admission.student.relationship_to_child"></el-input>
+
+                                        </el-form-item>
+
+
                                     </div>
                                 </div>
                                 <div class="col-md-12 text-center">
@@ -221,6 +230,7 @@
                                        v-bind:key='row.id'>
                                     Parent /  Guardinan : # {{$index+1}}
                                     <tr>
+
                                         <th>Name</th>
                                         <td><input class="form-control" v-model="row.name"></td>
                                         <th>Occupation</th>
@@ -695,8 +705,8 @@
                         trigger: 'blur'
                     }, {
                         min: 3,
-                        max: 5,
-                        message: 'Length should be 3 to 5',
+
+                        message: 'Length should be above 3 characters',
                         trigger: 'blur',
 
                     }],
@@ -706,11 +716,55 @@
                         trigger: 'blur'
                     }, {
                         min: 3,
-                        max: 5,
-                        message: 'Length should be 3 to 5',
+
+                        message: 'Length should be above 3 characters',
                         trigger: 'blur',
 
                     }],
+                    telephone:[{
+                        required: true,
+                        message: 'Telephone is Required',
+                        trigger: 'blur'
+                    }, {
+                        min: 3,
+
+                        message: 'Length should be above 3 characters',
+                        trigger: 'blur',
+
+                    }],
+                    mobile:[{
+                        required: true,
+                        message: 'Mobile is Required',
+                        trigger: 'blur'
+                    }, {
+                        min: 3,
+
+                        message: 'Length should be above 3 characters',
+                        trigger: 'blur',
+
+                    }],
+                    post_code:[{
+                        required: true,
+                        message: 'Postcode is Required',
+                        trigger: 'blur'
+                    }, {
+                        min: 3,
+
+                        message: 'Length should be above 3 characters',
+                        trigger: 'blur',
+
+                    }],
+                    relationship_to_child:[{
+                        required: true,
+                        message: 'Relationship to child is Required',
+                        trigger: 'blur'
+                     }, {
+                min: 3,
+
+                message: 'Length should be above 3 characters',
+                trigger: 'blur',
+
+            }],
                 },
 
             }

@@ -12,6 +12,7 @@ class CoursesController extends Controller
 
     public function index()
     {
+
         return Course::select(['id','course_name'])->get();
     }
 

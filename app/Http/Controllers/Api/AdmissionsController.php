@@ -21,7 +21,8 @@ class AdmissionsController extends Controller
     public function index(Request $request)
     {
         $result = Admission::with('student');
-        $result = $result->orderBy('other_children_at_institute', 'ASC')
+        $result = $result->orderBy('other_children_at_institute', 'desc')
+
                           ->orderBy('enrolment_date', 'ASC')
                           ;
 
@@ -36,6 +37,8 @@ class AdmissionsController extends Controller
         if($request->get('sort') && $request->get('dir')){
             $result->orderBy($request->get('sort'),$request->get('dir'));
         }
+        $test =  $result->whereNull('enrolment_date')->paginate(10);
+        $x=1;
         return $result->whereNull('enrolment_date')->paginate(10);
     }
 

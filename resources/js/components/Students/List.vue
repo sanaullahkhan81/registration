@@ -51,7 +51,7 @@
                     { field: 'surname', title: 'Student Lastname'},
                     { field: 'gender', title: 'Gender'},
                     { field: 'post_code', title: 'Post Code'},
-					{ field: 'date_of_birth', title: 'Post Code',  filter:'date', cell: this.birthday_date},
+					{ field: 'date_of_birth', title: 'Date Of Birth',  filter:'date', cell: this.birthday_date},
                     { field: 'id', title: 'Actions', cell: this.cellFunction, width:'100px',filterable:false }
                 ],
             };
